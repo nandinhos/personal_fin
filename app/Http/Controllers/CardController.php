@@ -9,22 +9,30 @@ class CardController extends Controller
 {
     public function index()
     {
-        $profile = auth()->user()->profiles()->first();
-
-        if (! $profile) {
-            return response()->json([]);
-        }
+        $profile = auth()->user()->profiles()->firstOrCreate(
+            ['user_id' => auth()->id()],
+            ['name' => 'Principal', 'is_default' => true]
+        );
 
         $cards = Card::where('profile_id', $profile->id)->get();
 
-        return response()->json($cards);
+        if (request()->expectsJson()) {
+            return response()->json($cards);
+        }
+
+        return view('cards.index', compact('cards'));
+    }
+
+    public function create()
+    {
+        return view('cards.create');
     }
 
     public function store(Request $request)
     {
         $profile = auth()->user()->profiles()->firstOrCreate(
             ['user_id' => auth()->id()],
-            ['name' => 'Padrão', 'is_default' => true]
+            ['name' => 'Principal', 'is_default' => true]
         );
 
         $validated = $request->validate([
@@ -42,7 +50,11 @@ class CardController extends Controller
 
         $card = Card::create($validated);
 
-        return response()->json($card, 201);
+        if ($request->expectsJson()) {
+            return response()->json($card, 201);
+        }
+
+        return redirect()->route('cards.index')->with('success', 'Cartão criado com sucesso!');
     }
 
     public function show(Card $card)
