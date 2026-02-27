@@ -1,59 +1,220 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+<h1 align="center">
+  💰 Personal Finance Manager
+</h1>
 
 <p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
+  Sistema de gerenciamento de finanças pessoais — mobile-first, multi-perfil e preparado para escala.
 </p>
 
-## About Laravel
+<p align="center">
+  <img src="https://img.shields.io/badge/Laravel-12-FF2D20?style=for-the-badge&logo=laravel&logoColor=white" alt="Laravel 12">
+  <img src="https://img.shields.io/badge/Livewire-3-FB70A9?style=for-the-badge&logo=livewire&logoColor=white" alt="Livewire 3">
+  <img src="https://img.shields.io/badge/Tailwind_CSS-3-06B6D4?style=for-the-badge&logo=tailwindcss&logoColor=white" alt="Tailwind CSS">
+  <img src="https://img.shields.io/badge/PostgreSQL-16-4169E1?style=for-the-badge&logo=postgresql&logoColor=white" alt="PostgreSQL">
+  <img src="https://img.shields.io/badge/Docker-Compose-2496ED?style=for-the-badge&logo=docker&logoColor=white" alt="Docker">
+  <img src="https://img.shields.io/badge/PHP-8.2+-777BB4?style=for-the-badge&logo=php&logoColor=white" alt="PHP 8.2+">
+</p>
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+<p align="center">
+  <img src="https://img.shields.io/badge/status-em_desenvolvimento-yellow?style=flat-square">
+  <img src="https://img.shields.io/badge/sprint-01_%2F_09-blue?style=flat-square">
+  <img src="https://img.shields.io/badge/design-glassmorphism_%2B_dark_mode-purple?style=flat-square">
+  <img src="https://img.shields.io/badge/licença-MIT-green?style=flat-square">
+</p>
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+---
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+## 📋 Sobre o Projeto
 
-## Learning Laravel
+O **Personal Finance Manager (PFM)** é uma aplicação web focada em controle financeiro pessoal, construída com foco em usabilidade mobile-first e experiência visual moderna (Glassmorphism + Dark Mode).
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework. You can also check out [Laravel Learn](https://laravel.com/learn), where you will be guided through building a modern Laravel application.
+O sistema permite gerenciar receitas, despesas, cartões, contas, metas, limites de gastos, investimentos e empréstimos — tudo com suporte a múltiplos perfis financeiros por usuário.
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+---
 
-## Laravel Sponsors
+## ✨ Funcionalidades
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+| Módulo | Descrição | Status |
+|--------|-----------|--------|
+| 🔐 **Autenticação** | Registro, login, recuperação de senha (Breeze) | ✅ Concluído |
+| 📊 **Dashboard** | Saldo, receitas, despesas, projeções do mês | 🔄 Em andamento |
+| 🏦 **Contas** | CRUD de contas bancárias com saldo em tempo real | 📋 Planejado |
+| 💳 **Cartões** | Gestão de cartões, faturas, limites e vencimentos | 📋 Planejado |
+| 💸 **Transações** | Receitas, despesas e transferências (único, recorrente, parcelado) | 📋 Planejado |
+| 🎯 **Metas** | Definição de objetivos com barra de progresso | 📋 Planejado |
+| 🚦 **Limites** | Alertas e bloqueios por categoria de gasto | 📋 Planejado |
+| 📈 **Investimentos** | Registro e acompanhamento de rentabilidade | 📋 Planejado |
+| 🤝 **Empréstimos** | Controle de parcelas e taxas | 📋 Planejado |
+| 📉 **Relatórios** | Análises por categoria, período, conta e cartão | 📋 Planejado |
+| 💡 **Insights** | Alertas inteligentes e previsões financeiras | 📋 Planejado |
 
-### Premium Partners
+---
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+## 🧱 Stack Técnica
 
-## Contributing
+### Backend
+- **[Laravel 12](https://laravel.com)** — Framework PHP com arquitetura MVC + Services + Actions
+- **[Laravel Breeze](https://github.com/laravel/breeze)** — Autenticação leve e customizável
+- **[Livewire 3](https://livewire.laravel.com)** — Componentes reativos full-stack sem JavaScript
+- **PostgreSQL** — Banco relacional com UUIDs, soft deletes e índices otimizados
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+### Frontend
+- **[Tailwind CSS](https://tailwindcss.com)** — Utility-first CSS framework
+- **[Alpine.js](https://alpinejs.dev)** — Reatividade leve no browser
+- **Design System** — Glassmorphism + Dark Mode, responsivo mobile-first
 
-## Code of Conduct
+### Infra
+- **Docker + Docker Compose** — Ambiente local padronizado e reproduzível
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+---
 
-## Security Vulnerabilities
+## 🗂️ Estrutura do Projeto
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+```
+personal_fin/
+├── app/
+│   ├── Http/Controllers/     # Controllers REST
+│   ├── Livewire/             # Componentes Livewire
+│   ├── Models/               # Eloquent Models
+│   └── Providers/
+├── database/
+│   ├── migrations/           # Estrutura do banco
+│   ├── factories/
+│   └── seeders/
+├── resources/
+│   ├── views/                # Blade templates
+│   └── css/ js/
+├── routes/
+│   ├── web.php
+│   └── auth.php
+├── docs/
+│   ├── PRD.md                # Product Requirements Document
+│   └── schema.md             # Modelagem do banco
+└── .aidev/                   # Configuração de agentes AI Dev
+```
 
-## License
+---
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+## 🚀 Instalação e Execução
+
+### Pré-requisitos
+
+- Docker e Docker Compose instalados
+- PHP 8.2+ (para execução sem Docker)
+- Composer
+
+### Com Docker
+
+```bash
+# Clone o repositório
+git clone https://github.com/nandinhos/personal_fin.git
+cd personal_fin
+
+# Copie o arquivo de ambiente
+cp .env.example .env
+
+# Suba os containers
+docker compose up -d
+
+# Instale as dependências
+docker compose exec app composer install
+docker compose exec app npm install
+
+# Gere a chave da aplicação
+docker compose exec app php artisan key:generate
+
+# Execute as migrations
+docker compose exec app php artisan migrate --seed
+```
+
+### Sem Docker
+
+```bash
+git clone https://github.com/nandinhos/personal_fin.git
+cd personal_fin
+
+cp .env.example .env
+
+composer install
+npm install
+
+php artisan key:generate
+php artisan migrate --seed
+
+php artisan serve
+npm run dev
+```
+
+A aplicação estará disponível em `http://localhost:8000`.
+
+---
+
+## 🗺️ Roadmap
+
+```
+Sprint 01  ████████░░  Fundamentos & Autenticação        🔄 Em andamento
+Sprint 02  ░░░░░░░░░░  Dashboard MVP                     📋 Planejado
+Sprint 03  ░░░░░░░░░░  Contas & Cartões                  📋 Planejado
+Sprint 04  ░░░░░░░░░░  Transações Core                   📋 Planejado
+Sprint 05  ░░░░░░░░░░  Transações Avançadas              📋 Planejado
+Sprint 06  ░░░░░░░░░░  Metas & Limites                   📋 Planejado
+Sprint 07  ░░░░░░░░░░  Relatórios & Insights             📋 Planejado
+Sprint 08  ░░░░░░░░░░  Investimentos & Empréstimos       📋 Planejado
+Sprint 09  ░░░░░░░░░░  Perfil & Configurações            📋 Planejado
+```
+
+---
+
+## 🗄️ Modelo de Dados (Macro)
+
+```
+users
+  └── profiles (1:N)
+        ├── accounts (1:N)
+        ├── cards (1:N)
+        ├── transactions (1:N)
+        │     └── categories / subcategories
+        ├── goals (1:N)
+        ├── limits (1:N)
+        ├── investments (1:N)
+        └── loans (1:N)
+```
+
+---
+
+## 🤝 Contribuindo
+
+Este projeto está em desenvolvimento ativo. Contribuições são bem-vindas.
+
+```bash
+# Crie uma branch para sua feature
+git checkout -b feat/nome-da-feature
+
+# Commit seguindo o padrão Conventional Commits
+git commit -m "feat(modulo): descricao da mudanca"
+
+# Abra um Pull Request
+```
+
+**Padrão de commits:**
+
+| Tipo | Uso |
+|------|-----|
+| `feat` | Nova funcionalidade |
+| `fix` | Correção de bug |
+| `refactor` | Refatoração sem mudança de comportamento |
+| `test` | Adição ou ajuste de testes |
+| `docs` | Documentação |
+| `chore` | Tarefas de manutenção |
+
+---
+
+## 📄 Licença
+
+Distribuído sob a licença MIT. Veja [LICENSE](LICENSE) para mais informações.
+
+---
+
+<p align="center">
+  Feito com ❤️ por <strong>Nando Dev</strong>
+</p>
