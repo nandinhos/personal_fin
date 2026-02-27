@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+                <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}" class="h-full">
     <head>
         <meta charset="utf-8">
@@ -11,7 +11,16 @@
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 
+        <script>
+            if (localStorage.getItem('theme') === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+                document.documentElement.classList.add('dark');
+            } else {
+                document.documentElement.classList.remove('dark');
+            }
+        </script>
+
         @vite(['resources/css/app.css', 'resources/js/app.js'])
+        @livewireStyles
     </head>
     <body class="h-full font-sans antialiased bg-slate-900 text-slate-200">
         <div x-data="{ sidebarOpen: false, sidebarExpanded: true }" class="min-h-full">
@@ -28,13 +37,25 @@
                         <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 18.75a60.07 60.07 0 0 1 15.797 2.101c.727.198 1.453-.342 1.453-1.096V18.75M3.75 4.5v.75A.75.75 0 0 1 3 6h-.75m0 0v-.375c0-.621.504-1.125 1.125-1.125H20.25M2.25 6v9m18-10.5v.75c0 .414.336.75.75.75h.75m-1.5-1.5h.375c.621 0 1.125.504 1.125 1.125v9.75c0 .621-.504 1.125-1.125 1.125h-.375m1.5-1.5H21a.75.75 0 0 0-.75.75v.75m0 0H3.75m0 0h-.375a1.125 1.125 0 0 1-1.125-1.125V15m1.5 1.5v-.75A.75.75 0 0 0 3 15h-.75M15 10.5a3 3 0 1 1-6 0 3 3 0 0 1 6 0Zm3 0h.008v.008H18V10.5Zm-12 0h.008v.008H6V10.5Z" />
                         </svg>
-                        <span class="text-xs mt-1">Contas</span>
+                        <span class="text-[10px] mt-1">Contas</span>
+                    </a>
+                    <a href="{{ route('cards.index') }}" class="flex flex-col items-center justify-center w-16 h-full {{ request()->routeIs('cards.*') ? 'text-indigo-400' : 'text-slate-400 hover:text-indigo-400' }}">
+                        <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 8.25h19.5M2.25 9h19.5m-16.5 5.25h6m-6 2.25h3m-3.75-6.15a.48.48 0 0 0-.245.088A.477.477 0 0 0 4.5 10.5v1.125c0 .414.336.75.75.75h1.125V13.5h0c0 .414.336.75.75.75H8.25v2.25h.375a1.125 1.125 0 0 1 1.125 1.125V18.75m-3.75-10.5h15c.621 0 1.125.504 1.125 1.125v9.75c0 .621-.504 1.125-1.125 1.125h-15a1.125 1.125 0 0 1-1.125-1.125v-9.75c0-.621.504-1.125 1.125-1.125Z" />
+                        </svg>
+                        <span class="text-[10px] mt-1">Cartões</span>
                     </a>
                     <a href="{{ route('transactions.index') }}" class="flex flex-col items-center justify-center w-16 h-full {{ request()->routeIs('transactions.*') ? 'text-indigo-400' : 'text-slate-400 hover:text-indigo-400' }}">
                         <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v12m-3-2.818l.879.659c1.171.879 3.07.879 4.242 0 1.172-.879 1.172-2.303 0-3.182C13.536 12.219 12.768 12 12 12c-.725 0-1.45-.22-2.003-.659-1.106-.879-1.106-2.303 0-3.182s2.9-.879 4.006 0l.415.33M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
                         </svg>
-                        <span class="text-xs mt-1">Gastos</span>
+                        <span class="text-[10px] mt-1">Gastos</span>
+                    </a>
+                    <a href="{{ route('categories.manager') }}" class="flex flex-col items-center justify-center w-16 h-full {{ request()->routeIs('categories.*') ? 'text-indigo-400' : 'text-slate-400 hover:text-indigo-400' }}">
+                        <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 12.75V12A2.25 2.25 0 0 1 4.5 9.75h15A2.25 2.25 0 0 1 21.75 12v.75m-8.69-6.44-2.12-2.12a1.5 1.5 0 0 0-1.061-.44H4.5A2.25 2.25 0 0 0 2.25 6v12a2.25 2.25 0 0 0 2.25 2.25h15A2.25 2.25 0 0 0 21.75 18V9a2.25 2.25 0 0 0-2.25-2.25h-5.379a1.5 1.5 0 0 1-1.06-.44Z" />
+                        </svg>
+                        <span class="text-[10px] mt-1">Categorias</span>
                     </a>
                     <a href="#" class="flex flex-col items-center justify-center w-16 h-full text-slate-400 hover:text-indigo-400">
                         <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
@@ -78,21 +99,14 @@
             <!-- Main Content -->
             <div class="lg:pl-64 transition-all duration-300" :class="sidebarExpanded ? 'lg:pl-64' : 'lg:pl-20'">
                 <div class="min-h-full">
-                    @include('layouts.navigation')
-
-                    @isset($header)
-                        <header class="bg-slate-900/80 backdrop-blur-md border-b border-slate-800">
-                            <div class="max-w-7xl mx-auto py-4 px-4 sm:px-6 lg:px-8">
-                                {{ $header }}
-                            </div>
-                        </header>
-                    @endisset
-
                     <main class="pb-24 lg:pb-8">
-                        {{ $slot }}
+                        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                            {{ $slot }}
+                        </div>
                     </main>
                 </div>
             </div>
         </div>
     </body>
+    @livewireScripts
 </html>
