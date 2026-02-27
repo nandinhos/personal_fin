@@ -1,4 +1,4 @@
-<div wire:poll.10s class="space-y-6">
+<div class="space-y-6">
     <header class="mb-8">
         <h1 class="text-3xl font-bold tracking-tight text-white">Dashboard Financeiro</h1>
         <p class="mt-2 text-sm text-slate-400">Bem-vindo de volta! Aqui está um resumo das suas finanças.</p>

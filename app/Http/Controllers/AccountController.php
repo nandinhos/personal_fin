@@ -11,7 +11,11 @@ class AccountController extends Controller
     {
         $accounts = Account::all();
 
-        return response()->json($accounts);
+        if (request()->expectsJson()) {
+            return response()->json($accounts);
+        }
+
+        return view('accounts.index', compact('accounts'));
     }
 
     public function store(Request $request)
