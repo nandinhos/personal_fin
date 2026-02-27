@@ -2,8 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Account;
+use App\Models\Card;
+use App\Models\Category;
 use App\Models\Transaction;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class TransactionController extends Controller
 {
@@ -37,13 +41,28 @@ class TransactionController extends Controller
 
         $transactions = $query->orderBy('date', 'desc')->get();
 
-        return response()->json($transactions);
+        if ($request->expectsJson()) {
+            return response()->json($transactions);
+        }
+
+        $categories = Category::all();
+        $accounts = Account::all();
+
+        return view('transactions.index', compact('transactions', 'categories', 'accounts'));
+    }
+
+    public function create()
+    {
+        $categories = Category::all();
+        $accounts = Account::all();
+        $cards = Card::all();
+
+        return view('transactions.create', compact('categories', 'accounts', 'cards'));
     }
 
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'profile_id' => 'required|exists:profiles,id',
             'category_id' => 'required|exists:categories,id',
             'account_id' => 'nullable|exists:accounts,id',
             'card_id' => 'nullable|exists:cards,id',
@@ -55,9 +74,22 @@ class TransactionController extends Controller
             'recurring_frequency' => 'nullable|string',
         ]);
 
+        $user = Auth::user();
+        $profile = $user->profile;
+
+        if (! $profile) {
+            return back()->withErrors(['error' => 'Perfil não encontrado.']);
+        }
+
+        $validated['profile_id'] = $profile->id;
+
         $transaction = Transaction::create($validated);
 
-        return response()->json($transaction, 201);
+        if ($request->expectsJson()) {
+            return response()->json($transaction, 201);
+        }
+
+        return redirect()->route('transactions.index')->with('success', 'Transação criada com sucesso!');
     }
 
     public function show(Transaction $transaction)

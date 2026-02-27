@@ -76,7 +76,7 @@ class DashboardController extends Controller
             $monthlyLimitPercent = $defaultLimit > 0 ? (int) (($monthlyLimitUsed / $defaultLimit) * 100) : 0;
         }
 
-        return view('livewire.dashboard', compact(
+        return view('dashboard', compact(
             'totalBalance', 'monthlyIncome', 'monthlyExpenses',
             'goalsProgress', 'recentTransactions', 'monthlyLimitUsed',
             'monthlyLimitAvailable', 'monthlyLimitPercent'

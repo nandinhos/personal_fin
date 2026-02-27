@@ -18,6 +18,11 @@ class AccountController extends Controller
         return view('accounts.index', compact('accounts'));
     }
 
+    public function create()
+    {
+        return view('accounts.create');
+    }
+
     public function store(Request $request)
     {
         $validated = $request->validate([
