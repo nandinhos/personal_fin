@@ -148,6 +148,74 @@
 
 ---
 
+---
+
+### 🛠️ FEATURE: Adequação e Saneamento de Rotas
+**Origem:** Varredura diagnóstica realizada em 2026-02-27
+**Status:** ⏳ Pendente
+**Objetivo:** Corrigir rotas quebradas, eliminar rotas desnecessárias e aplicar isolamento por usuário nos controllers
+
+#### Contexto
+
+Varredura completa identificou **68 rotas registradas**, sendo:
+- 49 funcionais
+- 10 que causam erro 500
+- 3 alertas de segurança (queries sem filtro por usuário)
+
+---
+
+#### Tarefas
+
+| # | Tarefa | Prioridade | Status |
+|---|--------|------------|--------|
+| R.1 | Remover rotas `*/edit` de todos os resources (não usadas no Livewire) | 🔴 CRÍTICA | ⏳ Pendente |
+| R.2 | Adicionar método `edit()` ou excluir rota em `AccountController` | 🔴 CRÍTICA | ⏳ Pendente |
+| R.3 | Adicionar métodos `create()` e `edit()` ou excluir rotas em `CardController` | 🔴 CRÍTICA | ⏳ Pendente |
+| R.4 | Adicionar método `edit()` ou excluir rota em `TransactionController` | 🔴 CRÍTICA | ⏳ Pendente |
+| R.5 | Criar views `categories.create`, `categories.show`, `categories.edit` ou excluir rotas | 🔴 CRÍTICA | ⏳ Pendente |
+| R.6 | Criar views de subcategorias ou excluir rotas GET de subcategory | 🟡 Média | ⏳ Pendente |
+| R.7 | Corrigir `AccountController::index` — filtrar por usuário autenticado (sem `Account::all()`) | 🔴 CRÍTICA | ⏳ Pendente |
+| R.8 | Corrigir `CardController::index` — filtrar por usuário autenticado | 🔴 CRÍTICA | ⏳ Pendente |
+| R.9 | Auditar todos os controllers: garantir isolamento por `profile_id` do usuário autenticado | 🔴 CRÍTICA | ⏳ Pendente |
+| R.10 | Adicionar Policy ou middleware de autorização por recurso (account, card, transaction) | 🟡 Média | ⏳ Pendente |
+| R.11 | Definir estratégia: rotas são REST-only (JSON) ou híbridas (HTML + Livewire)? | 🔴 CRÍTICA | ⏳ Pendente |
+| R.12 | Adicionar testes de integração para as rotas críticas (auth, accounts, transactions) | 🟡 Média | ⏳ Pendente |
+
+---
+
+#### Plano de Adequação
+
+**Decisão arquitetural a tomar (R.11):**
+
+> O projeto usa Livewire para o frontend. Isso significa que a maioria das rotas `GET */create` e `GET */edit` não são necessárias como rotas standalone — elas serão componentes Livewire. A recomendação é:
+
+```php
+// Opção A — REST puro (recomendado para Livewire):
+Route::resource('accounts', AccountController::class)
+    ->except(['create', 'edit']);
+
+// Opção B — Manter rotas HTML para fallback:
+// manter como está, mas implementar as views e métodos faltantes
+```
+
+**Correção de segurança (R.7, R.8, R.9):**
+
+```php
+// ERRADO — expõe dados de todos os usuários:
+$accounts = Account::all();
+
+// CORRETO — isolado por profile do usuário autenticado:
+$profile = auth()->user()->profiles()->first();
+$accounts = Account::where('profile_id', $profile->id)->get();
+```
+
+**Isolamento por recurso (R.10):**
+- Criar `AccountPolicy`, `CardPolicy`, `TransactionPolicy`
+- Registrar em `AuthServiceProvider`
+- Usar `$this->authorize('view', $account)` nos controllers
+
+---
+
 ## 📊 RESUMO DE PRIORIDADES
 
 | Sprint | Escopo | Tarefas | Status |
@@ -161,6 +229,7 @@
 | 7 | Relatórios | 7 | ⏳ Pendente |
 | 8 | Investimentos | 5 | ⏳ Pendente |
 | 9 | Perfil & Config | 5 | ⏳ Pendente |
+| **R** | **Adequação de Rotas** | **12** | **⏳ Pendente** |
 
 ---
 
@@ -187,6 +256,6 @@
 
 ---
 
-**Versão:** 1.0
+**Versão:** 1.1
 **Última atualização:** 2026-02-27
 **Responsável:** AI Dev Agent
