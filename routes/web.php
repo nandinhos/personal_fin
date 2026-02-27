@@ -5,6 +5,7 @@ use App\Http\Controllers\CardController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SubcategoryController;
+use App\Http\Controllers\TransactionController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -25,6 +26,9 @@ Route::middleware('auth')->group(function () {
     ]);
     Route::resource('cards', CardController::class)->parameters([
         'cards' => 'card',
+    ]);
+    Route::resource('transactions', TransactionController::class)->parameters([
+        'transactions' => 'transaction',
     ]);
     Route::resource('categories', CategoryController::class)->parameters([
         'categories' => 'category',
