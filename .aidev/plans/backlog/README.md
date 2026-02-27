@@ -9,6 +9,10 @@
 | Arquivo | Tipo | Prioridade | Status |
 |---------|------|------------|--------|
 | [adequacao-rotas.md](./adequacao-rotas.md) | Correção + Segurança + Arquitetura | 🔴 CRÍTICA | 💡 Backlog |
+| [frontend-improvements.md](./frontend-improvements.md) | Funcionalidades + UX/UI | 🔴 CRÍTICA | 💡 Backlog |
+| [dark-light-mode.md](./dark-light-mode.md) | UX / Tema / Acessibilidade | 🟡 Média | 💡 Backlog |
+| [refatoracao-api-endpoints.md](./refatoracao-api-endpoints.md) | Arquitetura / Refatoração / Segurança | 🔴 CRÍTICA | 💡 Backlog |
+| [gaps-controllers-metodos-orfaos.md](./gaps-controllers-metodos-orfaos.md) | Arquitetura / Gaps / Bugs | 🔴 CRÍTICA | 💡 Backlog |
 
 ---
 
@@ -26,8 +30,8 @@ Quando uma ideia for priorizada:
 
 ## 📊 Estatísticas
 
-- **Total de ideias:** 1
-- **Prontas para priorização:** 1
+- **Total de ideias:** 5
+- **Prontas para priorização:** 5
 - **Em análise:** 0
 
 ---

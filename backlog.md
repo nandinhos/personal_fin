@@ -216,6 +216,236 @@ $accounts = Account::where('profile_id', $profile->id)->get();
 
 ---
 
+### 🚀 FEATURE: Análise Profunda de Frontend com Agente Especialista
+**Origem:** Solicitação do usuário em 2026-02-27
+**Status:** ⏳ Pendente
+**Objetivo:** Contratar agente especialista em frontend para análise aprofundada do layout, otimização UX/UI e implementação de melhores práticas
+
+#### Contexto
+
+O sistema `personal_fin` precisa de uma análise detalhada de frontend para:
+- Melhorar a experiência do usuário (UX)
+- Otimizar o design visual (UI)
+- Implementar as melhores práticas de layout
+- Utilizar ferramentas como Context7 e Laravel Boost para acelerar o desenvolvimento
+
+#### Justificativa
+
+O frontend atual precisa de uma revisão profissional para:
+1. **Posicionamento estratégico dos elementos** - Organizar componentes de forma mais intuitiva
+2. **Consistência visual** - Garantir padrões visuais em todas as telas
+3. **Performance** - Otimizar carregamento e renderização
+4. **Acessibilidade** - Garantir que o sistema seja acessível
+5. **Responsividade** - Melhorar experiência em diferentes dispositivos
+
+#### Ferramentas Recomendadas
+
+- **Context7** - Context-aware AI para análise de código
+- **Laravel Boost** - Kit de componentes Laravel para produtividade
+
+#### Tarefas
+
+| # | Tarefa | Prioridade | Status |
+|---|--------|------------|--------|
+| F.1 | Contratar/acionar agente especialista em frontend | 🔴 CRÍTICA | ⏳ Pendente |
+| F.2 | Análise completa do layout atual | 🔴 CRÍTICA | ⏳ Pendente |
+| F.3 | Levantamento de pontos de melhoria | 🔴 CRÍTICA | ⏳ Pendente |
+| F.4 | Implementação de melhorias no design system | 🟡 Média | ⏳ Pendente |
+| F.5 | Aplicação de Laravel Boost para componentes | 🟡 Média | ⏳ Pendente |
+| F.6 | Testes de UX e ajustes finais | 🟡 Média | ⏳ Pendente |
+
+#### Recursos de参考
+
+- Documentação Context7: https://context7.com
+- Laravel Boost: https://laravel.com/docs/12.x
+- Design System atual: Glassmorphism + Dark Mode
+
+---
+
+### 🚀 FEATURE: Botões de Ação Rápida do Dashboard
+**Origem:** Solicitação do usuário em 2026-02-27
+**Status:** ⏳ Pendente
+**Objetivo:** Implementar botões "+ Nova Receita" e "- Nova Despesa" funcionais
+
+#### Tarefas
+
+| # | Tarefa | Prioridade | Status |
+|---|--------|------------|--------|
+| B.1 | Criar modal de Quick Add para transações | 🔴 CRÍTICA | ⏳ Pendente |
+| B.2 | Integrar botão "+ Nova Receita" com modal de receita | 🔴 CRÍTICA | ⏳ Pendente |
+| B.3 | Integrar botão "- Nova Despesa" com modal de despesa | 🔴 CRÍTICA | ⏳ Pendente |
+| B.4 | Ao salvar, atualizar dados do dashboard em tempo real | 🟡 Média | ⏳ Pendente |
+
+---
+
+### 🚀 FEATURE: Card Limite Mensal Clicável
+**Origem:** Solicitação do usuário em 2026-02-27
+**Status:** ⏳ Pendente
+**Objetivo:** Card clicável que abre gerenciador de limites por tipo
+
+#### Tarefas
+
+| # | Tarefa | Prioridade | Status |
+|---|--------|------------|--------|
+| L.1 | Tornar card "Limite Mensal" clicável | 🔴 CRÍTICA | ⏳ Pendente |
+| L.2 | Criar página de gerenciador de limites | 🔴 CRÍTICA | ⏳ Pendente |
+| L.3 | Listar cada tipo de limite por linha no card | 🟡 Média | ⏳ Pendente |
+| L.4 | CRUD para configurar limites por categoria/tipo | 🟡 Média | ⏳ Pendente |
+| L.5 | Exibir percentual utilizado em cada linha do card | 🟡 Média | ⏳ Pendente |
+
+---
+
+### 🚀 FEATURE: Card Metas de Reserva Clicável
+**Origem:** Solicitação do usuário em 2026-02-27
+**Status:** ⏳ Pendente
+**Objetivo:** Card clicável para gerenciamento de metas de reserva
+
+#### Tarefas
+
+| # | Tarefa | Prioridade | Status |
+|---|--------|------------|--------|
+| M.1 | Tornar card "Metas de Reserva" clicável | 🔴 CRÍTICA | ⏳ Pendente |
+| M.2 | Criar página de gerenciamento de metas | 🔴 CRÍTICA | ⏳ Pendente |
+| M.3 | Exibir percentual de cada meta por linha no card | 🟡 Média | ⏳ Pendente |
+| M.4 | CRUD de metas de reserva (nome, valor alvo, prazo) | 🟡 Média | ⏳ Pendente |
+| M.5 | Barra de progresso para cada meta | 🟡 Média | ⏳ Pendente |
+
+---
+
+### 🚀 FEATURE: Cards de Receitas/Despesas Clicáveis
+**Origem:** Solicitação do usuário em 2026-02-27
+**Status:** ⏳ Pendente
+**Objetivo:** Cards clicáveis abrem listagem de transações com filtro
+
+#### Tarefas
+
+| # | Tarefa | Prioridade | Status |
+|---|--------|------------|--------|
+| R.1 | Tornar card "Receitas (Mês)" clicável | 🔴 CRÍTICA | ⏳ Pendente |
+| R.2 | Tornar card "Despesas (Mês)" clicável | 🔴 CRÍTICA | ⏳ Pendente |
+| R.3 | Ao clicar, abrir página de transações com filtro específico | 🔴 CRÍTICA | ⏳ Pendente |
+| R.4 | Implementar filtros na página de transações (type=income/expense) | 🟡 Média | ⏳ Pendente |
+
+---
+
+### 🚀 FEATURE: Gerenciador de Conta Específico
+**Origem:** Solicitação do usuário em 2026-02-27
+**Status:** ⏳ Pendente
+**Objetivo:** Ao clicar no card da conta, abrir extrato de movimentos
+
+#### Tarefas
+
+| # | Tarefa | Prioridade | Status |
+|---|--------|------------|--------|
+| GC.1 | Tornar card de conta clicável | 🔴 CRÍTICA | ⏳ Pendente |
+| GC.2 | Criar página de extrato da conta | 🔴 CRÍTICA | ⏳ Pendente |
+| GC.3 | Listar transações relacionadas à conta | 🔴 CRÍTICA | ⏳ Pendente |
+| GC.4 | Exibir saldo inicial, movimentações e saldo final | 🟡 Média | ⏳ Pendente |
+| GC.5 | Filtros por período no extrato | 🟡 Média | ⏳ Pendente |
+
+---
+
+### 🚀 FEATURE: Gerenciador de Cartão com Faturas Futuras
+**Origem:** Solicitação do usuário em 2026-02-27
+**Status:** ⏳ Pendente
+**Objetivo:** Extrato por cartão + visualização estilo Nubank de faturas futuras
+
+#### Tarefas
+
+| # | Tarefa | Prioridade | Status |
+|---|--------|------------|--------|
+| CC.1 | Tornar card de cartão clicável | 🔴 CRÍTICA | ⏳ Pendente |
+| CC.2 | Criar página de extrato do cartão | 🔴 CRÍTICA | ⏳ Pendente |
+| CC.3 | Criar módulo de faturas futuras (style Nubank) | 🔴 CRÍTICA | ⏳ Pendente |
+| CC.4 | Exibir预测 de fatura por mês futuro | 🟡 Média | ⏳ Pendente |
+| CC.5 | Permitir personalizar cor do cartão (Glassmorphism) | 🟡 Média | ⏳ Pendente |
+| CC.6 | Exibir limite disponível e utilizado | 🟡 Média | ⏳ Pendente |
+
+---
+
+### 🚀 FEATURE: Menu Gastos com Carrossel e Filtros
+**Origem:** Solicitação do usuário em 2026-02-27
+**Status:** ⏳ Pendente
+**Objetivo:** Interface melhorada para página de transações
+
+#### Tarefas
+
+| # | Tarefa | Prioridade | Status |
+|---|--------|------------|--------|
+| G.1 | Implementar carrossel de seleção de Mês | 🔴 CRÍTICA | ⏳ Pendente |
+| G.2 | Implementar carrossel de seleção de Ano | 🔴 CRÍTICA | ⏳ Pendente |
+| G.3 | Adicionar badges de filtro: "Geral", "Receitas", "Despesas" | 🔴 CRÍTICA | ⏳ Pendente |
+| G.4 | Criar card com gráfico de barras laterais por categoria | 🟡 Média | ⏳ Pendente |
+| G.5 | Integrar filtros com listagem de transações | 🟡 Média | ⏳ Pendente |
+
+---
+
+### 🚀 FEATURE: CRUD Completo de Categorias
+**Origem:** Solicitação do usuário em 2026-02-27
+**Status:** ⏳ Pendente
+**Objetivo:** Funcionalidades completas de CRUD para categorias e subcategorias
+
+#### Tarefas
+
+| # | Tarefa | Prioridade | Status |
+|---|--------|------------|--------|
+| C.1 | Criar nova categoria (botão funcional) | 🔴 CRÍTICA | ⏳ Pendente |
+| C.2 | Criar nova subcategoria | 🔴 CRÍTICA | ⏳ Pendente |
+| C.3 | Editar categoria | 🔴 CRÍTICA | ⏳ Pendente |
+| C.4 | Editar subcategoria | 🔴 CRÍTICA | ⏳ Pendente |
+| C.5 | Deletar categoria com aviso de desassociação | 🔴 CRÍTICA | ⏳ Pendente |
+| C.6 | Deletar subcategoria | 🔴 CRÍTICA | ⏳ Pendente |
+| C.7 | Ao deletar categoria com movimentos, associar a "Sem Categoria" | 🔴 CRÍTICA | ⏳ Pendente |
+
+---
+
+### 🚀 FEATURE: Abas Funcionais na Página de Categorias
+**Origem:** Solicitação do usuário em 2026-02-27
+**Status:** ⏳ Pendente
+**Objetivo:** Corrigir e implementar abas de Despesas/Receitas
+
+#### Tarefas
+
+| # | Tarefa | Prioridade | Status |
+|---|--------|------------|--------|
+| A.1 | Corrigir funcionamento da aba "Despesas" | 🔴 CRÍTICA | ⏳ Pendente |
+| A.2 | Corrigir funcionamento da aba "Receitas" | 🔴 CRÍTICA | ⏳ Pendente |
+| A.3 | Testar alternância entre abas | 🟡 Média | ⏳ Pendente |
+| A.4 | Persistir estado da aba selecionada | 🟢 Baixa | ⏳ Pendente |
+
+---
+
+### 🚀 FEATURE: Relatórios para Gestão de Finanças Pessoais
+**Origem:** Solicitação do usuário em 2026-02-27
+**Status:** ⏳ Pendente
+**Objetivo:** Implementar relatórios úteis para finanças pessoais
+
+#### Relatórios Sugeridos
+
+| # | Relatório | Descrição | Prioridade |
+|---|-----------|-----------|------------|
+| REL.1 | **Evolução Patrimonial** | Evolução do patrimônio ao longo do tempo | 🟡 Média |
+| REL.2 | **Fluxo de Caixa** | Entradas vs saídas por período | 🔴 CRÍTICA |
+| REL.3 | **Gastos por Categoria** | Pizza/barra de despesas por categoria | 🔴 CRÍTICA |
+| REL.4 | **Comparativo Mensal** | Comparar meses anteriores | 🟡 Média |
+| REL.5 | **Gastos por Cartão** | breakdown de gastos por cartão | 🟡 Média |
+| REL.6 | **Gastos por Conta** | breakdown de gastos por conta | 🟡 Média |
+| REL.7 | **Top Gastos** | Maiores despesas do período | 🟡 Média |
+| REL.8 | **Receitas vs Despesas** | Gráfico comparativo | 🔴 CRÍTICA |
+| REL.9 | **Projeção de Gastos** | Estimar gastos no final do mês | 🟢 Baixa |
+| REL.10 | **Análise de Metas** | Progresso das metas de reserva | 🟡 Média |
+
+#### Tarefas
+
+| # | Tarefa | Prioridade | Status |
+|---|--------|------------|--------|
+| REL.1 | Implementar endpoint de cada relatório | 🟡 Média | ⏳ Pendente |
+| REL.2 | Criar UI para visualização de relatórios | 🟡 Média | ⏳ Pendente |
+| REL.3 | Adicionar gráficos (Chart.js ou similar) | 🟡 Média | ⏳ Pendente |
+| REL.4 | Exportar relatório (PDF/Excel) | 🟢 Baixa | ⏳ Pendente |
+
+---
+
 ## 📊 RESUMO DE PRIORIDADES
 
 | Sprint | Escopo | Tarefas | Status |

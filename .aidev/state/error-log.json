@@ -1,0 +1,28 @@
+{
+  "errors": [
+    {
+      "timestamp": "2026-02-27T05:50:06Z",
+      "exit_code": 2,
+      "command": "head -n 1",
+      "error_message": "Erro não capturado",
+      "pattern": "unknown",
+      "description": "Erro genérico detectado",
+      "solution": "Análise manual necessária. Consulte os logs para mais detalhes.",
+      "suggested_fix": "aidev doctor",
+      "confidence": "low",
+      "actionable": false
+    },
+    {
+      "timestamp": "2026-02-27T06:03:42Z",
+      "exit_code": 2,
+      "command": "head -n 1",
+      "error_message": "Erro não capturado",
+      "pattern": "unknown",
+      "description": "Erro genérico detectado",
+      "solution": "Análise manual necessária. Consulte os logs para mais detalhes.",
+      "suggested_fix": "aidev doctor",
+      "confidence": "low",
+      "actionable": false
+    }
+  ]
+}
