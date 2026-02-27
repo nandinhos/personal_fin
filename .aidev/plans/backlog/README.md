@@ -6,7 +6,9 @@
 
 ## 🎯 Ideias em Backlog
 
-*Nenhuma ideia no backlog no momento.*
+| Arquivo | Tipo | Prioridade | Status |
+|---------|------|------------|--------|
+| [adequacao-rotas.md](./adequacao-rotas.md) | Correção + Segurança + Arquitetura | 🔴 CRÍTICA | 💡 Backlog |
 
 ---
 
@@ -24,10 +26,10 @@ Quando uma ideia for priorizada:
 
 ## 📊 Estatísticas
 
-- **Total de ideias:** 0
-- **Prontas para priorização:** 0
+- **Total de ideias:** 1
+- **Prontas para priorização:** 1
 - **Em análise:** 0
 
 ---
 
-*Última atualização: *
+*Última atualização: 2026-02-27*
