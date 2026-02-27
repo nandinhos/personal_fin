@@ -9,15 +9,25 @@ class CardController extends Controller
 {
     public function index()
     {
-        $cards = Card::all();
+        $profile = auth()->user()->profiles()->first();
+
+        if (! $profile) {
+            return response()->json([]);
+        }
+
+        $cards = Card::where('profile_id', $profile->id)->get();
 
         return response()->json($cards);
     }
 
     public function store(Request $request)
     {
+        $profile = auth()->user()->profiles()->firstOrCreate(
+            ['user_id' => auth()->id()],
+            ['name' => 'Padrão', 'is_default' => true]
+        );
+
         $validated = $request->validate([
-            'profile_id' => 'required|exists:profiles,id',
             'name' => 'required|string|max:255',
             'type' => 'required|in:credit,debit',
             'last_four_digits' => 'required|string|size:4',
@@ -28,6 +38,8 @@ class CardController extends Controller
             'brand' => 'nullable|string',
         ]);
 
+        $validated['profile_id'] = $profile->id;
+
         $card = Card::create($validated);
 
         return response()->json($card, 201);
@@ -35,11 +47,15 @@ class CardController extends Controller
 
     public function show(Card $card)
     {
+        abort_if($card->profile->user_id !== auth()->id(), 403);
+
         return response()->json($card);
     }
 
     public function update(Request $request, Card $card)
     {
+        abort_if($card->profile->user_id !== auth()->id(), 403);
+
         $validated = $request->validate([
             'name' => 'sometimes|string|max:255',
             'type' => 'sometimes|in:credit,debit',
@@ -59,6 +75,8 @@ class CardController extends Controller
 
     public function destroy(Card $card)
     {
+        abort_if($card->profile->user_id !== auth()->id(), 403);
+
         $card->delete();
 
         return response()->json(null, 204);

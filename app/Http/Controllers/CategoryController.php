@@ -3,13 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Models\Category;
-use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use Illuminate\View\View;
 
 class CategoryController extends Controller
 {
-    public function index(Request $request): View
+    public function index(Request $request): JsonResponse
     {
         $profileId = $request->user()->profiles()->first()?->id;
 
@@ -18,10 +17,10 @@ class CategoryController extends Controller
             ->orderBy('name')
             ->get();
 
-        return view('categories.index', compact('categories'));
+        return response()->json($categories);
     }
 
-    public function store(Request $request): RedirectResponse
+    public function store(Request $request): JsonResponse
     {
         $validated = $request->validate([
             'name' => 'required|string|max:255',
@@ -30,23 +29,19 @@ class CategoryController extends Controller
             'color' => 'nullable|string|max:20',
         ]);
 
-        $profileId = $request->user()->profiles()->first()?->id
-            ?? auth()->user()->profiles()->create([
-                'name' => 'Padrão',
-                'is_default' => true,
-            ])->id;
+        $profile = $request->user()->profiles()->firstOrCreate(
+            ['user_id' => auth()->id()],
+            ['name' => 'Padrão', 'is_default' => true]
+        );
 
-        Category::create([
-            ...$validated,
-            'profile_id' => $profileId,
-        ]);
+        $category = Category::create([...$validated, 'profile_id' => $profile->id]);
 
-        return redirect()->route('categories.index')->with('success', 'Categoria criada com sucesso');
+        return response()->json($category, 201);
     }
 
-    public function update(Request $request, Category $category): RedirectResponse
+    public function update(Request $request, Category $category): JsonResponse
     {
-        $this->authorize('update', $category);
+        abort_if($category->profile->user_id !== auth()->id(), 403);
 
         $category->update($request->validate([
             'name' => 'required|string|max:255',
@@ -55,15 +50,15 @@ class CategoryController extends Controller
             'color' => 'nullable|string|max:20',
         ]));
 
-        return redirect()->route('categories.index')->with('success', 'Categoria atualizada');
+        return response()->json($category);
     }
 
-    public function destroy(Category $category): RedirectResponse
+    public function destroy(Category $category): JsonResponse
     {
-        $this->authorize('delete', $category);
+        abort_if($category->profile->user_id !== auth()->id(), 403);
 
         $category->delete();
 
-        return redirect()->route('categories.index')->with('success', 'Categoria excluída');
+        return response()->json(null, 204);
     }
 }

@@ -10,7 +10,7 @@ class ReportController extends Controller
 {
     public function expensesByCategory(Request $request)
     {
-        $profileId = $request->user()->profile->id ?? 1;
+        $profileId = $request->user()->profiles()->first()?->id ?? 0;
 
         $expenses = Transaction::where('profile_id', $profileId)
             ->where('type', 'expense')
@@ -24,7 +24,7 @@ class ReportController extends Controller
 
     public function incomeVsExpense(Request $request)
     {
-        $profileId = $request->user()->profile->id ?? 1;
+        $profileId = $request->user()->profiles()->first()?->id ?? 0;
 
         $income = Transaction::where('profile_id', $profileId)
             ->where('type', 'income')
@@ -43,7 +43,7 @@ class ReportController extends Controller
 
     public function monthly(Request $request)
     {
-        $profileId = $request->user()->profile->id ?? 1;
+        $profileId = $request->user()->profiles()->first()?->id ?? 0;
 
         $monthly = Transaction::where('profile_id', $profileId)
             ->select(
@@ -62,7 +62,7 @@ class ReportController extends Controller
 
     public function byCard(Request $request)
     {
-        $profileId = $request->user()->profile->id ?? 1;
+        $profileId = $request->user()->profiles()->first()?->id ?? 0;
 
         $byCard = Transaction::where('profile_id', $profileId)
             ->whereNotNull('card_id')
@@ -76,7 +76,7 @@ class ReportController extends Controller
 
     public function byAccount(Request $request)
     {
-        $profileId = $request->user()->profile->id ?? 1;
+        $profileId = $request->user()->profiles()->first()?->id ?? 0;
 
         $byAccount = Transaction::where('profile_id', $profileId)
             ->whereNotNull('account_id')

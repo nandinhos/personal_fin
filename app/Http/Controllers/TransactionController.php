@@ -13,7 +13,9 @@ class TransactionController extends Controller
 {
     public function index(Request $request)
     {
-        $query = Transaction::query();
+        $profile = auth()->user()->profiles()->first();
+
+        $query = Transaction::query()->where('profile_id', $profile?->id ?? 0);
 
         if ($request->has('type')) {
             $query->where('type', $request->type);
@@ -45,23 +47,30 @@ class TransactionController extends Controller
             return response()->json($transactions);
         }
 
-        $categories = Category::all();
-        $accounts = Account::all();
+        $categories = $profile ? Category::where('profile_id', $profile->id)->get() : collect();
+        $accounts = $profile ? Account::where('profile_id', $profile->id)->get() : collect();
 
         return view('transactions.index', compact('transactions', 'categories', 'accounts'));
     }
 
     public function create()
     {
-        $categories = Category::all();
-        $accounts = Account::all();
-        $cards = Card::all();
+        $profile = auth()->user()->profiles()->first();
+
+        $categories = $profile ? Category::where('profile_id', $profile->id)->get() : collect();
+        $accounts = $profile ? Account::where('profile_id', $profile->id)->get() : collect();
+        $cards = $profile ? Card::where('profile_id', $profile->id)->get() : collect();
 
         return view('transactions.create', compact('categories', 'accounts', 'cards'));
     }
 
     public function store(Request $request)
     {
+        $profile = auth()->user()->profiles()->firstOrCreate(
+            ['user_id' => auth()->id()],
+            ['name' => 'Padrão', 'is_default' => true]
+        );
+
         $validated = $request->validate([
             'category_id' => 'required|exists:categories,id',
             'account_id' => 'nullable|exists:accounts,id',
@@ -73,13 +82,6 @@ class TransactionController extends Controller
             'is_recurring' => 'boolean',
             'recurring_frequency' => 'nullable|string',
         ]);
-
-        $user = Auth::user();
-        $profile = $user->profile;
-
-        if (! $profile) {
-            return back()->withErrors(['error' => 'Perfil não encontrado.']);
-        }
 
         $validated['profile_id'] = $profile->id;
 
@@ -94,11 +96,15 @@ class TransactionController extends Controller
 
     public function show(Transaction $transaction)
     {
+        abort_if($transaction->profile->user_id !== auth()->id(), 403);
+
         return response()->json($transaction);
     }
 
     public function update(Request $request, Transaction $transaction)
     {
+        abort_if($transaction->profile->user_id !== auth()->id(), 403);
+
         $validated = $request->validate([
             'category_id' => 'sometimes|exists:categories,id',
             'account_id' => 'nullable|exists:accounts,id',
@@ -118,6 +124,8 @@ class TransactionController extends Controller
 
     public function destroy(Transaction $transaction)
     {
+        abort_if($transaction->profile->user_id !== auth()->id(), 403);
+
         $transaction->delete();
 
         return response()->json(null, 204);

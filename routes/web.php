@@ -21,21 +21,25 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
-    Route::resource('accounts', AccountController::class)->parameters([
-        'accounts' => 'account',
-    ]);
-    Route::resource('cards', CardController::class)->parameters([
-        'cards' => 'card',
-    ]);
-    Route::resource('transactions', TransactionController::class)->parameters([
-        'transactions' => 'transaction',
-    ]);
-    Route::resource('categories', CategoryController::class)->parameters([
-        'categories' => 'category',
-    ]);
-    Route::resource('subcategories', SubcategoryController::class)->parameters([
-        'subcategories' => 'subcategory',
-    ]);
+    Route::resource('accounts', AccountController::class)
+        ->except(['create', 'edit'])
+        ->parameters(['accounts' => 'account']);
+
+    Route::resource('cards', CardController::class)
+        ->except(['create', 'edit'])
+        ->parameters(['cards' => 'card']);
+
+    Route::resource('transactions', TransactionController::class)
+        ->except(['edit'])
+        ->parameters(['transactions' => 'transaction']);
+
+    Route::resource('categories', CategoryController::class)
+        ->except(['create', 'edit', 'show'])
+        ->parameters(['categories' => 'category']);
+
+    Route::resource('subcategories', SubcategoryController::class)
+        ->except(['create', 'edit', 'show'])
+        ->parameters(['subcategories' => 'subcategory']);
 
     Route::get('/reports/expenses-by-category', [ReportController::class, 'expensesByCategory']);
     Route::get('/reports/income-expense', [ReportController::class, 'incomeVsExpense']);

@@ -3,13 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Models\Subcategory;
-use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use Illuminate\View\View;
 
 class SubcategoryController extends Controller
 {
-    public function index(Request $request): View
+    public function index(Request $request): JsonResponse
     {
         $profileId = $request->user()->profiles()->first()?->id;
 
@@ -17,10 +16,10 @@ class SubcategoryController extends Controller
             $q->where('profile_id', $profileId);
         })->orderBy('name')->get();
 
-        return view('subcategories.index', compact('subcategories'));
+        return response()->json($subcategories);
     }
 
-    public function store(Request $request): RedirectResponse
+    public function store(Request $request): JsonResponse
     {
         $validated = $request->validate([
             'name' => 'required|string|max:255',
@@ -29,12 +28,12 @@ class SubcategoryController extends Controller
             'color' => 'nullable|string|max:20',
         ]);
 
-        Subcategory::create($validated);
+        $subcategory = Subcategory::create($validated);
 
-        return redirect()->route('subcategories.index')->with('success', 'Subcategoria criada');
+        return response()->json($subcategory, 201);
     }
 
-    public function update(Request $request, Subcategory $subcategory): RedirectResponse
+    public function update(Request $request, Subcategory $subcategory): JsonResponse
     {
         $subcategory->update($request->validate([
             'name' => 'required|string|max:255',
@@ -43,13 +42,13 @@ class SubcategoryController extends Controller
             'color' => 'nullable|string|max:20',
         ]));
 
-        return redirect()->route('subcategories.index')->with('success', 'Subcategoria atualizada');
+        return response()->json($subcategory);
     }
 
-    public function destroy(Subcategory $subcategory): RedirectResponse
+    public function destroy(Subcategory $subcategory): JsonResponse
     {
         $subcategory->delete();
 
-        return redirect()->route('subcategories.index')->with('success', 'Subcategoria excluída');
+        return response()->json(null, 204);
     }
 }
