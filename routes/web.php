@@ -4,6 +4,7 @@ use App\Http\Controllers\AccountController;
 use App\Http\Controllers\CardController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\ReportController;
 use App\Http\Controllers\SubcategoryController;
 use App\Http\Controllers\TransactionController;
 use Illuminate\Support\Facades\Route;
@@ -36,6 +37,12 @@ Route::middleware('auth')->group(function () {
     Route::resource('subcategories', SubcategoryController::class)->parameters([
         'subcategories' => 'subcategory',
     ]);
+
+    Route::get('/reports/expenses-by-category', [ReportController::class, 'expensesByCategory']);
+    Route::get('/reports/income-expense', [ReportController::class, 'incomeVsExpense']);
+    Route::get('/reports/monthly', [ReportController::class, 'monthly']);
+    Route::get('/reports/by-card', [ReportController::class, 'byCard']);
+    Route::get('/reports/by-account', [ReportController::class, 'byAccount']);
 });
 
 require __DIR__.'/auth.php';
