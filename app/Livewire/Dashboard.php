@@ -3,6 +3,7 @@
 namespace App\Livewire;
 
 use App\Models\Account;
+use App\Models\Category;
 use App\Models\Goal;
 use App\Models\Transaction;
 use Illuminate\Support\Facades\Auth;
@@ -26,6 +27,23 @@ class Dashboard extends Component
 
     public $monthlyLimitPercent = 0;
 
+    public $showQuickTransactionModal = false;
+
+    public $quickTransactionType = 'expense';
+
+    public $quickForm = [
+        'description' => '',
+        'amount' => '',
+        'category_id' => '',
+        'account_id' => '',
+        'date' => '',
+        'type' => 'expense',
+    ];
+
+    public $categories = [];
+
+    public $accounts = [];
+
     public function mount()
     {
         $this->loadData();
@@ -34,7 +52,7 @@ class Dashboard extends Component
     public function loadData()
     {
         $user = Auth::user();
-        $profile = $user->profile ?? null;
+        $profile = $user->profiles()->first() ?? null;
 
         if (! $profile) {
             return;
@@ -45,6 +63,7 @@ class Dashboard extends Component
         $this->loadGoalsProgress($profile);
         $this->loadRecentTransactions($profile);
         $this->loadMonthlyLimit($profile);
+        $this->loadCategoriesAndAccounts($profile);
     }
 
     protected function loadBalance($profile)
@@ -120,6 +139,87 @@ class Dashboard extends Component
         $this->monthlyLimitPercent = $defaultLimit > 0
             ? (int) (($this->monthlyLimitUsed / $defaultLimit) * 100)
             : 0;
+    }
+
+    protected function loadCategoriesAndAccounts($profile)
+    {
+        $this->categories = Category::where('profile_id', $profile->id)
+            ->orderBy('name')
+            ->get()
+            ->toArray();
+
+        $this->accounts = Account::where('profile_id', $profile->id)
+            ->where('is_active', true)
+            ->orderBy('name')
+            ->get()
+            ->toArray();
+    }
+
+    public function openQuickTransactionModal($type = 'expense')
+    {
+        $this->quickTransactionType = $type;
+        $this->quickForm = [
+            'description' => '',
+            'amount' => '',
+            'category_id' => '',
+            'account_id' => $this->accounts[0]['id'] ?? '',
+            'date' => now()->format('Y-m-d'),
+            'type' => $type,
+        ];
+        $this->showQuickTransactionModal = true;
+    }
+
+    public function closeQuickTransactionModal()
+    {
+        $this->showQuickTransactionModal = false;
+        $this->reset('quickForm');
+    }
+
+    public function saveQuickTransaction()
+    {
+        $user = Auth::user();
+        $profile = $user->profiles()->first();
+
+        if (! $profile) {
+            return;
+        }
+
+        $validated = $this->validate([
+            'quickForm.description' => 'required|string|max:255',
+            'quickForm.amount' => 'required|numeric|min:0.01',
+            'quickForm.category_id' => 'required|exists:categories,id',
+            'quickForm.account_id' => 'required|exists:accounts,id',
+            'quickForm.date' => 'required|date',
+            'quickForm.type' => 'required|in:income,expense',
+        ]);
+
+        Transaction::create([
+            'profile_id' => $profile->id,
+            'description' => $validated['quickForm']['description'],
+            'amount' => $validated['quickForm']['amount'],
+            'category_id' => $validated['quickForm']['category_id'],
+            'account_id' => $validated['quickForm']['account_id'],
+            'date' => $validated['quickForm']['date'],
+            'type' => $validated['quickForm']['type'],
+        ]);
+
+        $account = \App\Models\Account::find($validated['quickForm']['account_id']);
+        if ($account) {
+            if ($validated['quickForm']['type'] === 'income') {
+                $account->balance += $validated['quickForm']['amount'];
+            } else {
+                $account->balance -= $validated['quickForm']['amount'];
+            }
+            $account->save();
+        }
+
+        $this->closeQuickTransactionModal();
+        $this->loadData();
+
+        $this->dispatch('notify', [
+            'message' => 'Transação salva com sucesso!',
+            'type' => 'success',
+        ]);
     }
 
     public function render()
