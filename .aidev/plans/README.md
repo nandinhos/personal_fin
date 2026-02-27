@@ -41,9 +41,9 @@ history/YYYY-MM/ (arquivado)
 ## 📊 Status Atual
 
 - **Backlog**: 0 ideia(s)
-- **Features**: 1 planejada(s)
-- **Current**: 1 em execução - Sprint 8: Investimentos & Empréstimos
-- **History**: 7 concluída(s) - Sprint 1-7 (2026-02)
+- **Features**: 0 planejadas(s)
+- **Current**: 1 em execução - Sprint 9: Perfil & Configurações
+- **History**: 8 concluída(s) - Sprint 1-8 (2026-02)
 
 ### Lista de Features:
 1. Sprint 1: Fundamentos & Autenticação ✅
@@ -53,8 +53,8 @@ history/YYYY-MM/ (arquivado)
 5. Sprint 5: Transações Avançadas ✅
 6. Sprint 6: Metas & Limites ✅
 7. Sprint 7: Relatórios & Insights ✅
-8. Sprint 8: Investimentos & Empréstimos (Em andamento) - CURRENT
-9. Sprint 9: Perfil & Configurações
+8. Sprint 8: Investimentos & Empréstimos ✅
+9. Sprint 9: Perfil & Configurações (Em andamento) - CURRENT
 
 ---
 
