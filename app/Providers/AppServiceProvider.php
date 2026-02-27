@@ -2,7 +2,9 @@
 
 namespace App\Providers;
 
+use App\Mcp\Servers\boost;
 use Illuminate\Support\ServiceProvider;
+use Laravel\Mcp\Facades\Mcp;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -19,6 +21,6 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
+        Mcp::local('laravel-boost', boost::class);
     }
 }
