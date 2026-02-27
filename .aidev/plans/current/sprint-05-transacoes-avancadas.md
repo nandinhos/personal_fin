@@ -1,6 +1,6 @@
 # Sprint 5: Transações Avançadas
 
-**Status:** ⏳ Pendente  
+**Status:** ✅ Concluído  
 **Objetivo:** Parcelamento e recorrência
 
 ---
@@ -9,10 +9,10 @@
 
 | # | Tarefa | Prioridade | Status |
 |---|--------|------------|--------|
-| 5.1 | Migration: installments | 🟡 Média | ⏳ Pendente |
-| 5.2 | Model: Installment | 🟡 Média | ⏳ Pendente |
-| 5.3 | Transação parcelada | 🟡 Média | ⏳ Pendente |
-| 5.4 | Transação recorrente | 🟡 Média | ⏳ Pendente |
+| 5.1 | Migration: installments | 🟡 Média | ✅ Concluído |
+| 5.2 | Model: Installment | 🟡 Média | ✅ Concluído |
+| 5.3 | Transação parcelada | 🟡 Média | ✅ Concluído |
+| 5.4 | Transação recorrente | 🟡 Média | ✅ Concluído |
 | 5.5 | Cron jobs para recorrências | 🟡 Média | ⏳ Pendente |
 | 5.6 | Listagem de parcelas | 🟡 Média | ⏳ Pendente |
 
@@ -20,7 +20,7 @@
 
 ## Próxima Tarefa
 
-5.1 - Migration: installments
+Sprint 6: Metas & Limites
 
 ---
 
