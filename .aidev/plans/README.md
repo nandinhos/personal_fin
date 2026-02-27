@@ -41,17 +41,17 @@ history/YYYY-MM/ (arquivado)
 ## 📊 Status Atual
 
 - **Backlog**: 0 ideia(s)
-- **Features**: 4 planejadas(s)
-- **Current**: 1 em execução - Sprint 5: Transações Avançadas (Concluída - Aguardando Validação)
-- **History**: 4 concluída(s) - Sprint 1, Sprint 2, Sprint 3, Sprint 4 (2026-02)
+- **Features**: 3 planejadas(s)
+- **Current**: 1 em execução - Sprint 6: Metas & Limites
+- **History**: 5 concluída(s) - Sprint 1-5 (2026-02)
 
 ### Lista de Features:
 1. Sprint 1: Fundamentos & Autenticação ✅
 2. Sprint 2: Dashboard MVP ✅
 3. Sprint 3: Contas & Cartões ✅
 4. Sprint 4: Transações Core ✅
-5. Sprint 5: Transações Avançadas (Em andamento) - AGUARDANDO VALIDAÇÃO
-6. Sprint 6: Metas & Limites
+5. Sprint 5: Transações Avançadas ✅
+6. Sprint 6: Metas & Limites (Em andamento) - CURRENT
 7. Sprint 7: Relatórios & Insights
 8. Sprint 8: Investimentos & Empréstimos
 9. Sprint 9: Perfil & Configurações
