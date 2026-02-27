@@ -1,3 +1,27 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer components {
+    .glass {
+        @apply bg-white/10 backdrop-blur-md border border-white/20;
+    }
+    
+    .glass-dark {
+        @apply bg-slate-900/80 backdrop-blur-md border border-slate-700/50;
+    }
+    
+    .glass-card {
+        @apply bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-md border border-white/10 rounded-2xl;
+    }
+    
+    .glass-card-dark {
+        @apply bg-gradient-to-br from-slate-800/50 to-slate-900/50 backdrop-blur-md border border-slate-700/30 rounded-2xl;
+    }
+}
+
+@layer utilities {
+    .text-gradient {
+        @apply bg-clip-text text-transparent bg-gradient-to-r from-indigo-400 to-cyan-400;
+    }
+}

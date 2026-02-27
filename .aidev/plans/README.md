@@ -41,12 +41,12 @@ history/YYYY-MM/ (arquivado)
 ## 📊 Status Atual
 
 - **Backlog**: 0 ideia(s)
-- **Features**: 9 planejadas(s)
-- **Current**: 0 em execução
+- **Features**: 8 planejadas(s)
+- **Current**: 1 em execução - Sprint 1: Fundamentos & Autenticação (Concluída - Aguardando Validação)
 - **History**: 0 concluída(s)
 
 ### Lista de Features:
-1. Sprint 1: Fundamentos & Autenticação (Em andamento)
+1. Sprint 1: Fundamentos & Autenticação ✅ - AGUARDANDO VALIDAÇÃO MANUAL
 2. Sprint 2: Dashboard MVP
 3. Sprint 3: Contas & Cartões
 4. Sprint 4: Transações Core

@@ -1,6 +1,6 @@
 # Sprint 1: Fundamentos & Autenticação
 
-**Status:** 🚧 Em andamento  
+**Status:** ✅ Concluído  
 **Objetivo:** Setup + Auth + Design System Base
 
 ---
@@ -16,15 +16,15 @@
 | 1.5 | Migration: subcategories | 🔴 CRÍTICA | ✅ Concluído |
 | 1.6 | Models: Profile, Category, Subcategory | 🔴 CRÍTICA | ✅ Concluído |
 | 1.7 | Controllers + Routes REST | 🟡 Média | ✅ Concluído |
-| 1.8 | Seeders categorias PT-BR | 🟡 Média | ⏳ Pendente |
-| 1.9 | Design System (Glassmorphism + Dark Mode) | 🔴 CRÍTICA | ⏳ Pendente |
-| 1.10 | Layout base com Bottom Navigation | 🔴 CRÍTICA | ⏳ Pendente |
+| 1.8 | Seeders categorias PT-BR | 🟡 Média | ✅ Concluído |
+| 1.9 | Design System (Glassmorphism + Dark Mode) | 🔴 CRÍTICA | ✅ Concluído |
+| 1.10 | Layout base com Bottom Navigation | 🔴 CRÍTICA | ✅ Concluído |
 
 ---
 
 ## Próxima Tarefa
 
-1.8 - Seeders categorias PT-BR
+Sprint 2: Dashboard MVP
 
 ---
 
