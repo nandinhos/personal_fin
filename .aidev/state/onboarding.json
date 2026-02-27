@@ -1,0 +1,16 @@
+{
+  "version": "1.0",
+  "collected_at": "2026-02-26T23:29:46-03:00",
+  "project": {
+    "stack": "generic",
+    "maturity": "greenfield"
+  },
+  "answers": {
+    "objective": "Este é um projeto de Gerenciamento de Finanças Pessoais, multi usuário, mobile first (tambem web / tablet), desgin moderno, responsivo profissional (um pouco minimalista), o foco é a experiencia do usuário e praticidade no manuseio dos lançamentos e verificações das finanças.",
+    "priority_features": "as padrões de mercado, com segurança, integração de login somente após o termino dos testes de funcionalidade do MVP, dasboard completo, telas especificas por catas",
+    "restrictions": "não, será pessoal e restrito",
+    "integrations": "quero endppints em API, para maior controle e gerencia e facilitação de migração e de disponibilização de dados",
+    "team_level": "senior",
+    "code_patterns": "documentações serão prioritariamente verificadas no MCP Context7, com o MCP do Laravel Boost para refinamento e atualização de nuances especificas, e teremos memoria semantica com MCP Basic Memory e Indexação do código e memoria local com MCP Serena."
+  }
+}

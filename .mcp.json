@@ -1,0 +1,53 @@
+{
+  "mcpServers": {
+    "context7": {
+      "command": "/home/nandodev/.nvm/versions/node/v24.13.0/bin/npx",
+      "args": [
+        "-y",
+        "@upstash/context7-mcp@latest"
+      ],
+      "env": {
+        "CONTEXT7_API_KEY": "ctx7sk-060ff7f5-b768-4a1a-b945-0b909e518e89"
+      },
+      "description": "Context7 server for documentation lookups"
+    },
+    "serena": {
+      "command": "uvx",
+      "args": [
+        "serena",
+        "--project=/home/nandodev/projects/personal_fin"
+      ],
+      "description": "Serena server for intelligent code navigation"
+    },
+    "basic-memory": {
+      "command": "uvx",
+      "args": [
+        "basic-memory",
+        "mcp"
+      ],
+      "description": "Persistent memory for cross-session knowledge"
+    },
+    "laravel-boost": {
+      "command": "docker",
+      "args": [
+        "compose",
+        "exec",
+        "-T",
+        "laravel.test",
+        "php",
+        "artisan",
+        "mcp:start",
+        "boost"
+      ],
+      "env": {
+        "WWWUSER": "1000",
+        "WWWGROUP": "1000"
+      }
+    }
+  },
+  "projectConfig": {
+    "name": "personal_fin",
+    "stack": "generic",
+    "version": "1.0.0"
+  }
+}
