@@ -1,0 +1,25 @@
+{
+  "updated_at": "2026-02-27T04:20:43Z",
+  "mcps": {
+    "basic-memory": {
+      "status": "connected",
+      "message": "OK",
+      "last_check": "2026-02-27T04:20:43Z"
+    },
+    "context7": {
+      "status": "fallback",
+      "message": "Ativado automaticamente",
+      "last_check": "2026-02-27T04:20:45Z"
+    },
+    "serena": {
+      "status": "connected",
+      "message": "OK",
+      "last_check": "2026-02-27T04:20:45Z"
+    },
+    "laravel-boost": {
+      "status": "connected",
+      "message": "OK",
+      "last_check": "2026-02-27T04:20:45Z"
+    }
+  }
+}

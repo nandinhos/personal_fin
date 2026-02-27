@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\AccountController;
+use App\Http\Controllers\CardController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SubcategoryController;
@@ -18,6 +20,12 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
+    Route::resource('accounts', AccountController::class)->parameters([
+        'accounts' => 'account',
+    ]);
+    Route::resource('cards', CardController::class)->parameters([
+        'cards' => 'card',
+    ]);
     Route::resource('categories', CategoryController::class)->parameters([
         'categories' => 'category',
     ]);

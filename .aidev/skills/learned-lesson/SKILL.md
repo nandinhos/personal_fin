@@ -56,7 +56,7 @@ Documentar o contexto do aprendizado:
 ```markdown
 ## Contexto
 
-**Stack**: [Ex: Laravel 10 + PHP 8.2]
+**Stack**: [Ex: Laravel 12 + PHP 8.4, Livewire 4, PostgreSQL 16, Docker]
 **Ambiente**: [Ex: Producao, Docker]
 **Frequencia**: [Ex: Intermitente, sempre]
 **Impacto**: [Ex: Critico, Alto, Medio, Baixo]
