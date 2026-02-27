@@ -2,12 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Account;
-use App\Models\Card;
-use App\Models\Category;
 use App\Models\Transaction;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 
 class TransactionController extends Controller
 {
@@ -41,7 +38,9 @@ class TransactionController extends Controller
             $query->where('date', '<=', $request->date_to);
         }
 
-        $transactions = $query->orderBy('date', 'desc')->get();
+        $transactions = $query->with(['category', 'account', 'card'])
+            ->orderBy('date', 'desc')
+            ->get();
 
         if ($request->expectsJson()) {
             return response()->json($transactions);
@@ -55,11 +54,14 @@ class TransactionController extends Controller
 
     public function create()
     {
-        $profile = auth()->user()->profiles()->first();
+        $profile = auth()->user()->profiles()->firstOrCreate(
+            ['user_id' => auth()->id()],
+            ['name' => 'Principal', 'is_default' => true]
+        );
 
-        $categories = $profile ? Category::where('profile_id', $profile->id)->get() : collect();
-        $accounts = $profile ? Account::where('profile_id', $profile->id)->get() : collect();
-        $cards = $profile ? Card::where('profile_id', $profile->id)->get() : collect();
+        $categories = Category::where('profile_id', $profile->id)->get();
+        $accounts = Account::where('profile_id', $profile->id)->get();
+        $cards = Card::where('profile_id', $profile->id)->get();
 
         return view('transactions.create', compact('categories', 'accounts', 'cards'));
     }
@@ -68,7 +70,7 @@ class TransactionController extends Controller
     {
         $profile = auth()->user()->profiles()->firstOrCreate(
             ['user_id' => auth()->id()],
-            ['name' => 'Padrão', 'is_default' => true]
+            ['name' => 'Principal', 'is_default' => true]
         );
 
         $validated = $request->validate([
@@ -88,32 +90,32 @@ class TransactionController extends Controller
         $transaction = Transaction::create($validated);
 
         if ($request->expectsJson()) {
-            return response()->json($transaction, 201);
+            return response()->json($transaction->load('category'), 201);
         }
 
         return redirect()->route('transactions.index')->with('success', 'Transação criada com sucesso!');
     }
 
-    public function show(Transaction $transaction)
+    public function show(Transaction $transaction): JsonResponse
     {
         abort_if($transaction->profile->user_id !== auth()->id(), 403);
 
-        return response()->json($transaction);
+        return response()->json($transaction->load(['category', 'account', 'card']));
     }
 
-    public function update(Request $request, Transaction $transaction)
+    public function update(Request $request, Transaction $transaction): JsonResponse
     {
         abort_if($transaction->profile->user_id !== auth()->id(), 403);
 
         $validated = $request->validate([
-            'category_id' => 'sometimes|exists:categories,id',
-            'account_id' => 'nullable|exists:accounts,id',
-            'card_id' => 'nullable|exists:cards,id',
-            'type' => 'sometimes|in:income,expense',
-            'amount' => 'sometimes|numeric|min:0.01',
-            'description' => 'nullable|string|max:255',
-            'date' => 'sometimes|date',
-            'is_recurring' => 'boolean',
+            'category_id'         => 'sometimes|exists:categories,id',
+            'account_id'          => 'nullable|exists:accounts,id',
+            'card_id'             => 'nullable|exists:cards,id',
+            'type'                => 'sometimes|in:income,expense',
+            'amount'              => 'sometimes|numeric|min:0.01',
+            'description'         => 'nullable|string|max:255',
+            'date'                => 'sometimes|date',
+            'is_recurring'        => 'boolean',
             'recurring_frequency' => 'nullable|string',
         ]);
 
@@ -122,7 +124,7 @@ class TransactionController extends Controller
         return response()->json($transaction);
     }
 
-    public function destroy(Transaction $transaction)
+    public function destroy(Transaction $transaction): JsonResponse
     {
         abort_if($transaction->profile->user_id !== auth()->id(), 403);
 

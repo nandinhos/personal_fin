@@ -5,7 +5,7 @@
                 <h1 class="text-3xl font-bold tracking-tight text-white">Contas</h1>
                 <p class="mt-2 text-sm text-slate-400">Gerencie suas contas bancárias e carteiras.</p>
             </div>
-            <a href="{{ route('accounts.create') }}" 
+            <a href="{{ route('accounts.create') }}"
                 class="px-6 py-3 bg-indigo-600 hover:bg-indigo-700 text-white font-medium rounded-xl transition-colors inline-flex items-center gap-2">
                 <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
@@ -29,7 +29,7 @@
             @empty
                 <div class="col-span-full p-12 text-center border bg-slate-800/50 backdrop-blur-sm border-slate-700/50 rounded-2xl">
                     <p class="text-slate-400">Nenhuma conta cadastrada.</p>
-                    <a href="{{ route('accounts.create') }}" class="mt-4 inline-block text-indigo-400 hover:text-indigo-300">Criar primeira conta</a>
+                    <button type="button" class="mt-4 inline-block text-indigo-400 hover:text-indigo-300">Criar primeira conta</button>
                 </div>
             @endforelse
         </div>

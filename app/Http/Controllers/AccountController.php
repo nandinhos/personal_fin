@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Account;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
 class AccountController extends Controller
@@ -26,11 +27,16 @@ class AccountController extends Controller
         return view('accounts.index', compact('accounts'));
     }
 
+    public function create()
+    {
+        return view('accounts.create');
+    }
+
     public function store(Request $request)
     {
         $profile = auth()->user()->profiles()->firstOrCreate(
             ['user_id' => auth()->id()],
-            ['name' => 'Padrão', 'is_default' => true]
+            ['name' => 'Principal', 'is_default' => true]
         );
 
         $validated = $request->validate([
@@ -45,26 +51,30 @@ class AccountController extends Controller
 
         $account = Account::create($validated);
 
-        return response()->json($account, 201);
+        if ($request->expectsJson()) {
+            return response()->json($account, 201);
+        }
+
+        return redirect()->route('accounts.index')->with('success', 'Conta criada com sucesso!');
     }
 
-    public function show(Account $account)
+    public function show(Account $account): JsonResponse
     {
         abort_if($account->profile->user_id !== auth()->id(), 403);
 
         return response()->json($account);
     }
 
-    public function update(Request $request, Account $account)
+    public function update(Request $request, Account $account): JsonResponse
     {
         abort_if($account->profile->user_id !== auth()->id(), 403);
 
         $validated = $request->validate([
-            'name' => 'sometimes|string|max:255',
-            'type' => 'sometimes|in:checking,savings,investment,cash,other',
-            'balance' => 'sometimes|numeric',
-            'color' => 'nullable|string',
-            'icon' => 'nullable|string',
+            'name'      => 'sometimes|string|max:255',
+            'type'      => 'sometimes|in:checking,savings,investment,cash,other',
+            'balance'   => 'sometimes|numeric',
+            'color'     => 'nullable|string',
+            'icon'      => 'nullable|string',
             'is_active' => 'sometimes|boolean',
         ]);
 
@@ -73,7 +83,7 @@ class AccountController extends Controller
         return response()->json($account);
     }
 
-    public function destroy(Account $account)
+    public function destroy(Account $account): JsonResponse
     {
         abort_if($account->profile->user_id !== auth()->id(), 403);
 
