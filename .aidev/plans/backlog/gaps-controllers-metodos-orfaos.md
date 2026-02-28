@@ -1,7 +1,20 @@
 # 🕳️ BACKLOG: Gaps — Controllers, Métodos Órfãos e Módulos Sem Implementação
 
 **Data:** 2026-02-27
-**Status:** 💡 Backlog
+**Status:** 🟡 Parcialmente Concluído (2026-02-27)
+
+**Itens resolvidos:**
+- ✅ Cat.1: InstallmentController, InvestmentController, LoanController criados + rotas registradas
+- ✅ Cat.2: `GoalController::updateProgress()` — rota `PATCH /goals/{goal}/progress` registrada
+- ✅ Cat.3: `cards` resource com `->except(['create','edit'])` — 500 eliminado
+- ✅ Dead code: `FinancialProfileController.php` deletado
+
+**Itens pendentes (Cat.4 — Endpoints lógicos):**
+- ⏳ `GET /accounts/{account}/transactions`
+- ⏳ `GET /cards/{card}/transactions`
+- ⏳ `PATCH /accounts/{account}/toggle`
+- ⏳ `PATCH /cards/{card}/toggle`
+- ⏳ `GET /cards/{card}/summary`
 **Origem:** Análise de models vs controllers vs rotas
 **Prioridade:** 🔴 CRÍTICA
 
