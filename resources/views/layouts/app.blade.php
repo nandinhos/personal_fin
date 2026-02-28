@@ -91,7 +91,7 @@
             <div class="hidden lg:fixed lg:inset-y-0 lg:z-40 lg:flex lg:flex-col">
                 <div 
                     :class="sidebarExpanded ? 'w-64' : 'w-20'"
-                    class="flex flex-col min-h-0 bg-slate-900 border-r border-slate-800 transition-all duration-300">
+                    class="flex flex-col h-full bg-slate-900 border-r border-slate-800 transition-all duration-300">
                     @include('layouts.partials.sidebar')
                 </div>
             </div>
@@ -104,6 +104,39 @@
                             {{ $slot }}
                         </div>
                     </main>
+                </div>
+            </div>
+        </div>
+
+        <!-- Confirm Modal Alpine.js -->
+        <div 
+            x-data="confirmModal"
+            x-show="show"
+            x-transition:enter="transition ease-out duration-200"
+            x-transition:enter-start="opacity-0"
+            x-transition:enter-end="opacity-100"
+            x-transition:leave="transition ease-in duration-150"
+            x-transition:leave-start="opacity-100"
+            x-transition:leave-end="opacity-0"
+            @open-confirm-modal.window="open($event.detail.title, $event.detail.message, $event.detail.onConfirm)"
+            style="display: none;"
+            class="fixed inset-0 z-[100] flex items-center justify-center p-4"
+        >
+            <div class="absolute inset-0 bg-black/60 backdrop-blur-sm" @click="close()"></div>
+            <div class="relative bg-slate-800 border border-slate-700 rounded-2xl w-full max-w-sm p-6 shadow-2xl">
+                <h2 class="text-xl font-semibold text-white mb-2" x-text="title"></h2>
+                <p class="text-slate-400 mb-6" x-text="message"></p>
+                <div class="flex gap-3">
+                    <button 
+                        @click="close()"
+                        class="flex-1 px-4 py-3 bg-slate-700 hover:bg-slate-600 text-white font-medium rounded-xl transition-colors">
+                        Cancelar
+                    </button>
+                    <button 
+                        @click="confirm()"
+                        class="flex-1 px-4 py-3 bg-rose-600 hover:bg-rose-700 text-white font-medium rounded-xl transition-colors">
+                        Excluir
+                    </button>
                 </div>
             </div>
         </div>

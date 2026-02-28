@@ -41,7 +41,7 @@ class CategoryManager extends Component
         'color' => '#6366f1',
     ];
 
-    public $deleteItem = null;
+    public $itemToDelete = null;
 
     public $deleteType = null;
 
@@ -199,7 +199,7 @@ class CategoryManager extends Component
     public function confirmDelete($type, $item)
     {
         $this->deleteType = $type;
-        $this->deleteItem = $item;
+        $this->itemToDelete = $item;
         $this->showDeleteConfirm = true;
     }
 
@@ -207,12 +207,12 @@ class CategoryManager extends Component
     {
         \Illuminate\Support\Facades\Log::info('deleteItem chamado', [
             'deleteType' => $this->deleteType,
-            'deleteItem' => $this->deleteItem,
+            'deleteItem' => $this->itemToDelete,
         ]);
 
         try {
             if ($this->deleteType === 'category') {
-                $categoryId = $this->deleteItem['id'];
+                $categoryId = $this->itemToDelete['id'];
                 $category = Category::find($categoryId);
 
                 if (! $category) {
@@ -239,7 +239,7 @@ class CategoryManager extends Component
                 $category->delete();
                 $this->dispatch('notify', ['message' => 'Categoria excluída com sucesso!']);
             } elseif ($this->deleteType === 'subcategory') {
-                $subcategory = Subcategory::find($this->deleteItem['id']);
+                $subcategory = Subcategory::find($this->itemToDelete['id']);
                 if ($subcategory) {
                     $subcategory->delete();
                     $this->dispatch('notify', ['message' => 'Subcategoria excluída com sucesso!']);
@@ -259,7 +259,7 @@ class CategoryManager extends Component
     public function closeDeleteConfirm()
     {
         $this->showDeleteConfirm = false;
-        $this->deleteItem = null;
+        $this->itemToDelete = null;
         $this->deleteType = null;
     }
 

@@ -66,7 +66,18 @@
                             </button>
                             <button 
                                 wire:click="confirmDelete('category', {{ json_encode($category) }})"
-                                onclick="console.log('Botão excluir clicado', {{ $category['id'] }})"
+                                @click="
+                                    $wire.set('deleteType', 'category');
+                                    $wire.set('itemToDelete',{{ json_encode($category) }});
+                                    dispatchEvent(new CustomEvent('open-confirm-modal', {
+                                        detail: {
+                                            title: 'Excluir Categoria',
+                                            message: 'Tem certeza que deseja excluir a categoria &quot;{{ $category['name'] }}&quot;? Isso também excluirá todas as subcategorias.',
+                                            onConfirm: () => $wire.deleteItem()
+                                        }
+                                    }));
+                                    $event.stopPropagation();
+                                "
                                 class="p-2 text-slate-400 hover:text-rose-400 transition-colors rounded-lg hover:bg-slate-700/50"
                                 title="Excluir categoria">
                                 <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -92,6 +103,18 @@
                                         </button>
                                         <button 
                                             wire:click="confirmDelete('subcategory', {{ json_encode($subcategory) }})"
+                                            @click="
+                                                $wire.set('deleteType', 'subcategory');
+                                                $wire.set('itemToDelete',{{ json_encode($subcategory) }});
+                                                dispatchEvent(new CustomEvent('open-confirm-modal', {
+                                                    detail: {
+                                                        title: 'Excluir Subcategoria',
+                                                        message: 'Tem certeza que deseja excluir a subcategoria &quot;{{ $subcategory['name'] }}&quot;?',
+                                                        onConfirm: () => $wire.deleteItem()
+                                                    }
+                                                }));
+                                                $event.stopPropagation();
+                                            "
                                             class="opacity-0 group-hover:opacity-100 p-1 text-slate-400 hover:text-rose-400 transition-all"
                                             title="Excluir">
                                             <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -234,36 +257,6 @@
                         </button>
                     </div>
                 </form>
-            </div>
-        </div>
-    @endif
-
-    @if($showDeleteConfirm)
-        <div class="fixed inset-0 z-50 flex items-center justify-center p-4">
-            <div class="absolute inset-0 bg-black/60 backdrop-blur-sm" wire:click="closeDeleteConfirm"></div>
-            <div class="relative bg-slate-800 border border-slate-700 rounded-2xl w-full max-w-sm p-6 shadow-2xl">
-                <h2 class="text-xl font-semibold text-white mb-2">Confirmar Exclusão</h2>
-                <p class="text-slate-400 mb-6">
-                    Tem certeza que deseja excluir 
-                    <span class="text-white font-medium">{{ $deleteItem['name'] ?? '' }}</span>?
-                    @if($deleteType === 'category')
-                        <br><span class="text-rose-400 text-sm">Isso também excluirá todas as subcategorias.</span>
-                    @endif
-                </p>
-                
-                <div class="flex gap-3">
-                    <button 
-                        wire:click="closeDeleteConfirm"
-                        class="flex-1 px-4 py-3 bg-slate-700 hover:bg-slate-600 text-white font-medium rounded-xl transition-colors">
-                        Cancelar
-                    </button>
-                    <button 
-                        wire:click="deleteItem"
-                        onclick="console.log('Excluir clicado - deleteType:', '{{ $deleteType }}')"
-                        class="flex-1 px-4 py-3 bg-rose-600 hover:bg-rose-700 text-white font-medium rounded-xl transition-colors">
-                        Excluir
-                    </button>
-                </div>
             </div>
         </div>
     @endif

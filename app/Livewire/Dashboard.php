@@ -36,6 +36,7 @@ class Dashboard extends Component
         'amount' => '',
         'category_id' => '',
         'account_id' => '',
+        'to_account_id' => '',
         'date' => '',
         'type' => 'expense',
     ];
@@ -120,12 +121,17 @@ class Dashboard extends Component
             ->get();
 
         $this->recentTransactions = $transactions->map(function ($transaction) {
+            $date = $transaction->date;
+            if (is_string($date)) {
+                $date = \Carbon\Carbon::parse($date);
+            }
+
             return [
                 'id' => $transaction->id,
                 'name' => $transaction->description ?? $transaction->category->name ?? 'Transação',
                 'category' => $transaction->category->name ?? 'Sem categoria',
                 'amount' => $transaction->type === 'expense' ? -$transaction->amount : $transaction->amount,
-                'date' => $transaction->date->format('d/m/Y'),
+                'date' => $date->format('d/m/Y'),
                 'type' => $transaction->type,
             ];
         })->toArray();
@@ -163,6 +169,7 @@ class Dashboard extends Component
             'amount' => '',
             'category_id' => '',
             'account_id' => $this->accounts[0]['id'] ?? '',
+            'to_account_id' => '',
             'date' => now()->format('Y-m-d'),
             'type' => $type,
         ];
@@ -184,33 +191,62 @@ class Dashboard extends Component
             return;
         }
 
-        $validated = $this->validate([
+        $rules = [
             'quickForm.description' => 'required|string|max:255',
             'quickForm.amount' => 'required|numeric|min:0.01',
-            'quickForm.category_id' => 'required|exists:categories,id',
             'quickForm.account_id' => 'required|exists:accounts,id',
             'quickForm.date' => 'required|date',
-            'quickForm.type' => 'required|in:income,expense',
-        ]);
+            'quickForm.type' => 'required|in:income,expense,transfer',
+        ];
 
-        Transaction::create([
+        if ($this->quickForm['type'] === 'transfer') {
+            $rules['quickForm.to_account_id'] = 'required|exists:accounts,id|different:quickForm.account_id';
+        } else {
+            $rules['quickForm.category_id'] = 'required|exists:categories,id';
+        }
+
+        $validated = $this->validate($rules);
+
+        $transactionData = [
             'profile_id' => $profile->id,
             'description' => $validated['quickForm']['description'],
             'amount' => $validated['quickForm']['amount'],
-            'category_id' => $validated['quickForm']['category_id'],
             'account_id' => $validated['quickForm']['account_id'],
             'date' => $validated['quickForm']['date'],
             'type' => $validated['quickForm']['type'],
-        ]);
+        ];
 
-        $account = \App\Models\Account::find($validated['quickForm']['account_id']);
-        if ($account) {
-            if ($validated['quickForm']['type'] === 'income') {
-                $account->balance += $validated['quickForm']['amount'];
-            } else {
-                $account->balance -= $validated['quickForm']['amount'];
+        if ($validated['quickForm']['type'] === 'transfer') {
+            $transactionData['to_account_id'] = $validated['quickForm']['to_account_id'];
+            $transactionData['transfer_type'] = 'transfer';
+            $transactionData['category_id'] = null;
+        } else {
+            $transactionData['category_id'] = $validated['quickForm']['category_id'];
+        }
+
+        Transaction::create($transactionData);
+
+        if ($validated['quickForm']['type'] === 'transfer') {
+            $fromAccount = \App\Models\Account::find($validated['quickForm']['account_id']);
+            $toAccount = \App\Models\Account::find($validated['quickForm']['to_account_id']);
+            if ($fromAccount) {
+                $fromAccount->balance -= $validated['quickForm']['amount'];
+                $fromAccount->save();
             }
-            $account->save();
+            if ($toAccount) {
+                $toAccount->balance += $validated['quickForm']['amount'];
+                $toAccount->save();
+            }
+        } else {
+            $account = \App\Models\Account::find($validated['quickForm']['account_id']);
+            if ($account) {
+                if ($validated['quickForm']['type'] === 'income') {
+                    $account->balance += $validated['quickForm']['amount'];
+                } else {
+                    $account->balance -= $validated['quickForm']['amount'];
+                }
+                $account->save();
+            }
         }
 
         $this->closeQuickTransactionModal();

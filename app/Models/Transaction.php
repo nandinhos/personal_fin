@@ -16,7 +16,9 @@ class Transaction extends Model
         'category_id',
         'account_id',
         'card_id',
+        'to_account_id',
         'type',
+        'transfer_type',
         'amount',
         'description',
         'date',
@@ -45,8 +47,18 @@ class Transaction extends Model
         return $this->belongsTo(Account::class);
     }
 
+    public function toAccount(): BelongsTo
+    {
+        return $this->belongsTo(Account::class, 'to_account_id');
+    }
+
     public function card(): BelongsTo
     {
         return $this->belongsTo(Card::class);
+    }
+
+    public function isTransfer(): bool
+    {
+        return $this->type === 'transfer';
     }
 }

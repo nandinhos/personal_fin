@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Account;
+use App\Models\Card;
+use App\Models\Category;
 use App\Models\Transaction;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -38,7 +41,7 @@ class TransactionController extends Controller
             $query->where('date', '<=', $request->date_to);
         }
 
-        $transactions = $query->with(['category', 'account', 'card'])
+        $transactions = $query->with(['category', 'account', 'toAccount', 'card'])
             ->orderBy('date', 'desc')
             ->get();
 
@@ -73,21 +76,62 @@ class TransactionController extends Controller
             ['name' => 'Principal', 'is_default' => true]
         );
 
-        $validated = $request->validate([
-            'category_id' => 'required|exists:categories,id',
+        $rules = [
             'account_id' => 'nullable|exists:accounts,id',
             'card_id' => 'nullable|exists:cards,id',
-            'type' => 'required|in:income,expense',
+            'to_account_id' => 'nullable|exists:accounts,id',
+            'type' => 'required|in:income,expense,transfer',
             'amount' => 'required|numeric|min:0.01',
             'description' => 'nullable|string|max:255',
             'date' => 'required|date',
             'is_recurring' => 'boolean',
             'recurring_frequency' => 'nullable|string',
-        ]);
+        ];
+
+        if ($request->type === 'transfer') {
+            $rules['account_id'] = 'required|exists:accounts,id|different:to_account_id';
+            $rules['to_account_id'] = 'required|exists:accounts,id';
+            $rules['category_id'] = 'nullable';
+        } else {
+            $rules['category_id'] = 'required|exists:categories,id';
+        }
+
+        $validated = $request->validate($rules);
 
         $validated['profile_id'] = $profile->id;
 
+        if ($request->type === 'transfer') {
+            $validated['transfer_type'] = 'transfer';
+            unset($validated['category_id']);
+        }
+
         $transaction = Transaction::create($validated);
+
+        if ($request->type === 'transfer' && $validated['account_id'] && $validated['to_account_id']) {
+            $fromAccount = Account::find($validated['account_id']);
+            $toAccount = Account::find($validated['to_account_id']);
+
+            if ($fromAccount) {
+                $fromAccount->balance -= $validated['amount'];
+                $fromAccount->save();
+            }
+            if ($toAccount) {
+                $toAccount->balance += $validated['amount'];
+                $toAccount->save();
+            }
+        } elseif ($request->type === 'income' && $validated['account_id']) {
+            $account = Account::find($validated['account_id']);
+            if ($account) {
+                $account->balance += $validated['amount'];
+                $account->save();
+            }
+        } elseif ($request->type === 'expense' && $validated['account_id']) {
+            $account = Account::find($validated['account_id']);
+            if ($account) {
+                $account->balance -= $validated['amount'];
+                $account->save();
+            }
+        }
 
         if ($request->expectsJson()) {
             return response()->json($transaction->load('category'), 201);
@@ -108,14 +152,14 @@ class TransactionController extends Controller
         abort_if($transaction->profile->user_id !== auth()->id(), 403);
 
         $validated = $request->validate([
-            'category_id'         => 'sometimes|exists:categories,id',
-            'account_id'          => 'nullable|exists:accounts,id',
-            'card_id'             => 'nullable|exists:cards,id',
-            'type'                => 'sometimes|in:income,expense',
-            'amount'              => 'sometimes|numeric|min:0.01',
-            'description'         => 'nullable|string|max:255',
-            'date'                => 'sometimes|date',
-            'is_recurring'        => 'boolean',
+            'category_id' => 'sometimes|exists:categories,id',
+            'account_id' => 'nullable|exists:accounts,id',
+            'card_id' => 'nullable|exists:cards,id',
+            'type' => 'sometimes|in:income,expense',
+            'amount' => 'sometimes|numeric|min:0.01',
+            'description' => 'nullable|string|max:255',
+            'date' => 'sometimes|date',
+            'is_recurring' => 'boolean',
             'recurring_frequency' => 'nullable|string',
         ]);
 

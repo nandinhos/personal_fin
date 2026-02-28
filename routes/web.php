@@ -15,6 +15,8 @@ use App\Http\Controllers\SubcategoryController;
 use App\Http\Controllers\TransactionController;
 use Illuminate\Support\Facades\Route;
 
+Route::get('/', fn () => redirect()->route('dashboard'));
+
 Route::get('/dashboard', function () {
     return view('dashboard-wrapper');
 })->middleware(['auth', 'verified'])->name('dashboard');
@@ -33,17 +35,14 @@ Route::middleware('auth')->group(function () {
 
     // Contas
     Route::resource('accounts', AccountController::class)
-        ->except(['create', 'edit'])
         ->parameters(['accounts' => 'account']);
 
     // Cartões — fix crítico: create/edit não existem no controller
     Route::resource('cards', CardController::class)
-        ->except(['create', 'edit'])
         ->parameters(['cards' => 'card']);
 
     // Transações
     Route::resource('transactions', TransactionController::class)
-        ->except(['create', 'edit'])
         ->parameters(['transactions' => 'transaction']);
 
     // Categorias e subcategorias

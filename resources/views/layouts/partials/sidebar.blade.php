@@ -74,20 +74,20 @@
             </svg>
             <span x-show="sidebarExpanded !== false" class="font-medium">Relatórios</span>
         </a>
-
-        <div class="pt-4 mt-4 border-t border-slate-800">
-            <a href="{{ route('profile.edit') }}" 
-                class="flex items-center gap-3 px-3 py-2.5 rounded-lg transition-colors {{ request()->routeIs('profile.*') ? 'bg-indigo-600/10 text-indigo-400' : 'text-slate-400 hover:bg-slate-800 hover:text-white' }}">
-                <svg class="w-6 h-6 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M9.594 3.94c.09-.542.56-.94 1.11-.94h2.593c.55 0 1.02.398 1.11.94l.213 1.281c.063.374.313.686.645.87.074.04.147.083.22.127.325.196.72.257 1.075.124l1.217-.456a1.125 1.125 0 0 1 1.37.49l1.296 2.247a1.125 1.125 0 0 1-.26 1.431l-1.003.827c-.293.24-.438.613-.431.992a6.759 6.759 0 1 1 0-.255c-.007-.378.138-.75.43-.99l1.005-.828c.242-.127.451-.346.581-.61.13-.266.16-.577.16-.827 0-.224-.033-.447-.097-.661l-1.331-1.741a1.125 1.125 0 0 1-.515-.91l-.846-1.123c-.13-.185-.334-.303-.534-.404l-.224-.051c-.336-.063-.535-.4-.535-.827V4.077c0-.338.183-.65.467-.849l1.267-.977a2.335 2.335 0 0 1 1.544-.003Z" />
-                </svg>
-                <span x-show="sidebarExpanded !== false" class="font-medium">Configurações</span>
-            </a>
-        </div>
     </nav>
 
-    <!-- User Info & Actions -->
-    <div class="border-t border-slate-800 p-4" x-data="{ userMenuOpen: false }">
+    <!-- User & Settings Footer -->
+    <div class="border-t border-slate-800 p-4 space-y-2" x-data="{ userMenuOpen: false }">
+        <!-- Configurações -->
+        <a href="{{ route('profile.edit') }}" 
+            class="flex items-center gap-3 px-3 py-2.5 rounded-lg transition-colors {{ request()->routeIs('profile.*') ? 'bg-indigo-600/10 text-indigo-400' : 'text-slate-400 hover:bg-slate-800 hover:text-white' }}">
+            <svg class="w-6 h-6 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M9.594 3.94c.09-.542.56-.94 1.11-.94h2.593c.55 0 1.02.398 1.11.94l.213 1.281c.063.374.313.686.645.87.074.04.147.083.22.127.325.196.72.257 1.075.124l1.217-.456a1.125 1.125 0 0 1 1.37.49l1.296 2.247a1.125 1.125 0 0 1-.26 1.431l-1.003.827c-.293.24-.438.613-.431.992a6.759 6.759 0 1 1 0-.255c-.007-.378.138-.75.43-.99l1.005-.828c.242-.127.451-.346.581-.61.13-.266.16-.577.16-.827 0-.224-.033-.447-.097-.661l-1.331-1.741a1.125 1.125 0 0 1-.515-.91l-.846-1.123c-.13-.185-.334-.303-.534-.404l-.224-.051c-.336-.063-.535-.4-.535-.827V4.077c0-.338.183-.65.467-.849l1.267-.977a2.335 2.335 0 0 1 1.544-.003Z" />
+            </svg>
+            <span x-show="sidebarExpanded !== false" class="font-medium">Configurações</span>
+        </a>
+
+        <!-- User Menu -->
         <div class="relative">
             <button 
                 @click="userMenuOpen = !userMenuOpen"
@@ -104,7 +104,7 @@
                 </svg>
             </button>
 
-            <!-- User Dropdown Menu -->
+            <!-- User Dropdown Menu (sobe) -->
             <div 
                 x-show="userMenuOpen" 
                 @click.away="userMenuOpen = false"
@@ -123,7 +123,6 @@
                         Meu Perfil
                     </a>
                     
-                    <!-- Theme Toggle Placeholder (using JS for now as simple implementation) -->
                     <button 
                         @click="document.documentElement.classList.toggle('dark'); localStorage.setItem('theme', document.documentElement.classList.contains('dark') ? 'dark' : 'light')"
                         class="flex w-full items-center gap-2 px-4 py-2 text-sm text-slate-300 hover:bg-slate-700 hover:text-white transition-colors">

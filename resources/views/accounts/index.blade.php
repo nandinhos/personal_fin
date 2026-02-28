@@ -29,7 +29,7 @@
             @empty
                 <div class="col-span-full p-12 text-center border bg-slate-800/50 backdrop-blur-sm border-slate-700/50 rounded-2xl">
                     <p class="text-slate-400">Nenhuma conta cadastrada.</p>
-                    <button type="button" class="mt-4 inline-block text-indigo-400 hover:text-indigo-300">Criar primeira conta</button>
+                    <a href="{{ route('accounts.create') }}" class="mt-4 inline-block text-indigo-400 hover:text-indigo-300">Criar primeira conta</a>
                 </div>
             @endforelse
         </div>
