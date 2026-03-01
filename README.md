@@ -9,15 +9,15 @@
 <p align="center">
   <img src="https://img.shields.io/badge/Laravel-12-FF2D20?style=for-the-badge&logo=laravel&logoColor=white" alt="Laravel 12">
   <img src="https://img.shields.io/badge/Livewire-3-FB70A9?style=for-the-badge&logo=livewire&logoColor=white" alt="Livewire 3">
-  <img src="https://img.shields.io/badge/Tailwind_CSS-3-06B6D4?style=for-the-badge&logo=tailwindcss&logoColor=white" alt="Tailwind CSS">
+  <img src="https://img.shields.io/badge/Tailwind_CSS-3-38B2AC?style=for-the-badge&logo=tailwindcss&logoColor=white" alt="Tailwind CSS 3">
   <img src="https://img.shields.io/badge/PostgreSQL-16-4169E1?style=for-the-badge&logo=postgresql&logoColor=white" alt="PostgreSQL">
   <img src="https://img.shields.io/badge/Docker-Compose-2496ED?style=for-the-badge&logo=docker&logoColor=white" alt="Docker">
   <img src="https://img.shields.io/badge/PHP-8.2+-777BB4?style=for-the-badge&logo=php&logoColor=white" alt="PHP 8.2+">
 </p>
 
 <p align="center">
-  <img src="https://img.shields.io/badge/status-em_desenvolvimento-yellow?style=flat-square">
-  <img src="https://img.shields.io/badge/sprint-01_%2F_09-blue?style=flat-square">
+  <img src="https://img.shields.io/badge/status-concluído-green?style=flat-square">
+  <img src="https://img.shields.io/badge/sprint-09_%2F_09-blue?style=flat-square">
   <img src="https://img.shields.io/badge/design-glassmorphism_%2B_dark_mode-purple?style=flat-square">
   <img src="https://img.shields.io/badge/licença-MIT-green?style=flat-square">
 </p>
@@ -37,16 +37,18 @@ O sistema permite gerenciar receitas, despesas, cartões, contas, metas, limites
 | Módulo | Descrição | Status |
 |--------|-----------|--------|
 | 🔐 **Autenticação** | Registro, login, recuperação de senha (Breeze) | ✅ Concluído |
-| 📊 **Dashboard** | Saldo, receitas, despesas, projeções do mês | 🔄 Em andamento |
-| 🏦 **Contas** | CRUD de contas bancárias com saldo em tempo real | 📋 Planejado |
-| 💳 **Cartões** | Gestão de cartões, faturas, limites e vencimentos | 📋 Planejado |
-| 💸 **Transações** | Receitas, despesas e transferências (único, recorrente, parcelado) | 📋 Planejado |
-| 🎯 **Metas** | Definição de objetivos com barra de progresso | 📋 Planejado |
-| 🚦 **Limites** | Alertas e bloqueios por categoria de gasto | 📋 Planejado |
-| 📈 **Investimentos** | Registro e acompanhamento de rentabilidade | 📋 Planejado |
-| 🤝 **Empréstimos** | Controle de parcelas e taxas | 📋 Planejado |
-| 📉 **Relatórios** | Análises por categoria, período, conta e cartão | 📋 Planejado |
-| 💡 **Insights** | Alertas inteligentes e previsões financeiras | 📋 Planejado |
+| 📊 **Dashboard** | Saldo, receitas, despesas, projeções do mês, Quick Actions | ✅ Concluído |
+| 🏦 **Contas** | CRUD de contas bancárias com saldo em tempo real | ✅ Concluído |
+| 💳 **Cartões** | Gestão de cartões, faturas, limites e vencimentos | ✅ Concluído |
+| 💸 **Transações** | Receitas, despesas e transferências (único, recorrente, parcelado) | ✅ Concluído |
+| 🎯 **Metas** | Definição de objetivos com barra de progresso | ✅ Concluído |
+| 🚦 **Limites** | Alertas e bloqueios por categoria de gasto | ✅ Concluído |
+| 📈 **Investimentos** | Registro e acompanhamento de rentabilidade | ✅ Concluído |
+| 🤝 **Empréstimos** | Controle de parcelas e taxas | ✅ Concluído |
+| 📉 **Relatórios** | Análises por categoria, período, conta e cartão | ✅ Concluído |
+| 🏷️ **Categorias** | Gerenciador de categorias e subcategorias | ✅ Concluído |
+| 🌙 **Tema** | Dark/Light mode com toggle | ✅ Concluído |
+| 🧑‍💻 **Área Dev** | Catálogo de APIs e ferramentas de desenvolvimento | ✅ Concluído |
 
 ---
 
@@ -73,20 +75,20 @@ O sistema permite gerenciar receitas, despesas, cartões, contas, metas, limites
 ```
 personal_fin/
 ├── app/
-│   ├── Http/Controllers/     # Controllers REST
-│   ├── Livewire/             # Componentes Livewire
-│   ├── Models/               # Eloquent Models
+│   ├── Http/Controllers/     # Controllers REST (14 controllers)
+│   ├── Livewire/             # Componentes Livewire (Dashboard, CategoryManager, ThemeToggle)
+│   ├── Models/               # Eloquent Models (12 modelos)
 │   └── Providers/
 ├── database/
-│   ├── migrations/           # Estrutura do banco
+│   ├── migrations/           # 17 migrations
 │   ├── factories/
 │   └── seeders/
 ├── resources/
-│   ├── views/                # Blade templates
+│   ├── views/                # Blade templates + componentes
 │   └── css/ js/
 ├── routes/
-│   ├── web.php
-│   └── auth.php
+│   ├── web.php               # Rotas principais
+│   └── auth.php              # Rotas de autenticação
 ├── docs/
 │   ├── PRD.md                # Product Requirements Document
 │   └── schema.md             # Modelagem do banco
@@ -152,15 +154,15 @@ A aplicação estará disponível em `http://localhost:8000`.
 ## 🗺️ Roadmap
 
 ```
-Sprint 01  ████████░░  Fundamentos & Autenticação        🔄 Em andamento
-Sprint 02  ░░░░░░░░░░  Dashboard MVP                     📋 Planejado
-Sprint 03  ░░░░░░░░░░  Contas & Cartões                  📋 Planejado
-Sprint 04  ░░░░░░░░░░  Transações Core                   📋 Planejado
-Sprint 05  ░░░░░░░░░░  Transações Avançadas              📋 Planejado
-Sprint 06  ░░░░░░░░░░  Metas & Limites                   📋 Planejado
-Sprint 07  ░░░░░░░░░░  Relatórios & Insights             📋 Planejado
-Sprint 08  ░░░░░░░░░░  Investimentos & Empréstimos       📋 Planejado
-Sprint 09  ░░░░░░░░░░  Perfil & Configurações            📋 Planejado
+Sprint 01  ██████████  Fundamentos & Autenticação        ✅ Concluído
+Sprint 02  ██████████  Dashboard MVP                     ✅ Concluído
+Sprint 03  ██████████  Contas & Cartões                  ✅ Concluído
+Sprint 04  ██████████  Transações Core                   ✅ Concluído
+Sprint 05  ██████████  Transações Avançadas              ✅ Concluído
+Sprint 06  ██████████  Metas & Limites                   ✅ Concluído
+Sprint 07  ██████████  Relatórios & Insights             ✅ Concluído
+Sprint 08  ██████████  Investimentos & Empréstimos       ✅ Concluído
+Sprint 09  ██████████  Perfil & Configurações            ✅ Concluído
 ```
 
 ---
