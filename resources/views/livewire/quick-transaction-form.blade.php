@@ -40,7 +40,7 @@
                                 </button>
                             </div>
 
-                            <div class="grid grid-cols-2 gap-4 mt-2">
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-2">
                                 {{-- Valor --}}
                                 <div>
                                     <label for="amount" class="block mb-2 text-sm font-bold text-slate-700 dark:text-slate-300">Valor (R$)</label>

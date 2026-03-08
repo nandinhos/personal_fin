@@ -41,8 +41,11 @@
         @endphp
 
         @foreach($navItems as $item)
+            @php
+                $activePattern = str_replace('.index', '', $item['route']) . '*';
+            @endphp
             <a href="{{ route($item['route']) }}" 
-                class="group flex items-center gap-4 px-4 py-3.5 rounded-2xl transition-all duration-300 {{ request()->routeIs($item['route'].'*') ? 'bg-black/5 dark:bg-white/10 text-obsidian shadow-lg shadow-black/10' : 'text-slate-500 hover:bg-black/5 dark:hover:bg-white/5 hover:text-slate-900 dark:hover:text-white' }}">
+                class="group flex items-center gap-4 px-4 py-3.5 rounded-2xl transition-all duration-300 {{ request()->routeIs($activePattern) ? 'bg-black/5 dark:bg-white/10 text-obsidian shadow-lg shadow-black/10' : 'text-slate-500 hover:bg-black/5 dark:hover:bg-white/5 hover:text-slate-900 dark:hover:text-white' }}">
                 <svg class="w-6 h-6 flex-shrink-0 transition-transform group-hover:scale-110" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" d="{{ $item['icon'] }}" />
                 </svg>

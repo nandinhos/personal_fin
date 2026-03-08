@@ -8,6 +8,7 @@ use Livewire\Component;
 use Livewire\WithFileUploads;
 use Livewire\Attributes\On;
 use CihanSenturk\OfxParser\Ofx;
+use Illuminate\Support\Facades\Auth;
 
 class AccountImportForm extends Component
 {
@@ -31,29 +32,41 @@ class AccountImportForm extends Component
         $this->showModal = false;
     }
 
-    public function processImport()
+    public $parsedTransactions = [];
+    public $isPreviewing = false;
+    public $categories = [];
+
+    public function mount()
+    {
+        // categories loaded dynamically based on user
+    }
+
+    public function previewImport()
     {
         $this->validate([
-            'file' => 'required|file|mimes:txt,csv,ofx,xml|max:10240', // OFX is often text or xml MIME
+            'file' => 'required|file|max:2048', // Removed strict MIME types due to OFX inconsistencies across browsers
         ]);
 
         /** @var \App\Models\User $user */
-        $user = auth()->user();
+        $user = Auth::user();
         $account = Account::findOrFail($this->accountId);
+        $profileId = $user->currentProfile()->id;
 
         // Security check
-        if ($account->profile_id !== $user->currentProfile()->id) {
+        if ($account->profile_id !== $profileId) {
             abort(403);
         }
 
+        // Load categories to enable semantic matching
+        $this->categories = \App\Models\Category::where('profile_id', $profileId)
+                                ->orderBy('name', 'asc')
+                                ->get()
+                                ->toArray();
+
         try {
-            // Using modern CihanSenturk\OfxParser
             $ofxFileContent = \file_get_contents($this->file->getRealPath());
 
-            // Need to clean headers from OFX before passing to parser as it's expecting strict XML or clean OFX
-            // The parser doesn't expose loadFromFile directly in standard way sometimes, let's load it
             $parser = new \CihanSenturk\OfxParser\Parser();
-            
             $ofx = $parser->loadFromString($ofxFileContent);
 
             $bankAccount = reset($ofx->bankAccounts);
@@ -64,11 +77,10 @@ class AccountImportForm extends Component
 
             $transactions = $bankAccount->statement->transactions;
             
-            $imported = 0;
-            $skipped = 0;
+            $previewList = [];
 
-            foreach ($transactions as $transaction) {
-                $amount = $transaction->amount;
+            foreach ($transactions as $index => $transaction) {
+                $amount = (float) $transaction->amount;
                 $date = $transaction->date;
                 $description = $transaction->memo ?: ($transaction->name ?: 'Movimento Importado');
                 $type = $amount < 0 ? 'expense' : 'income';
@@ -80,37 +92,136 @@ class AccountImportForm extends Component
                     ->where('description', 'like', "%{$description}%")
                     ->exists();
 
-                if (!$exists) {
-                    Transaction::create([
-                        'profile_id' => $user->currentProfile()->id,
-                        'account_id' => $this->accountId,
-                        'category_id' => null, // Left empty to be categorized later
-                        'type' => $type,
-                        'amount' => abs($amount),
-                        'description' => $description,
-                        'date' => $date->format('Y-m-d')
-                    ]);
-                    $imported++;
+                // Semantic category guessing
+                $guessedCategoryId = $this->guessCategory($description, $type);
 
-                    // Update account balance
-                    $account->balance += $amount; // if it's expense, amount is negative, so += is correct
-                } else {
-                    $skipped++;
-                }
+                $previewList[] = [
+                    'id' => uniqid('tx_'),    
+                    'amount' => abs($amount),
+                    'date' => $date->format('Y-m-d'),
+                    'description' => substr($description, 0, 100),
+                    'type' => $type,
+                    'category_id' => $guessedCategoryId,
+                    'is_duplicate' => $exists,
+                    'import' => !$exists // Default select if not duplicate
+                ];
             }
 
-            $account->save();
-            
-            $this->importCount = $imported;
-            $this->skipCount = $skipped;
-            
-            session()->flash('success', "Importação concluída: {$imported} importados, {$skipped} ignorados (duplicados).");
-            
-            $this->dispatch('account-saved'); // to refresh the main screen
+            $this->parsedTransactions = $previewList;
+            $this->isPreviewing = true;
+            session()->flash('success', 'Arquivo lido com sucesso. Verifique os lançamentos antes de salvar.');
 
         } catch (\Exception $e) {
-            session()->flash('error', 'Erro ao processar o arquivo: ' . $e->getMessage());
+            session()->flash('error', 'Erro ao processar o arquivo (Formato inválido?): ' . $e->getMessage());
         }
+    }
+
+    private function guessCategory($description, $type)
+    {
+        $descLower = strtolower($description);
+        
+        // Basic keywords mapping for common semantic matches in BR
+        $keywords = [
+            'mercado' => ['supermercado', 'atacamento', 'assai', 'carrefour', 'extra', 'pao de acucar'],
+            'transporte' => ['uber', '99', 'posto', 'gasolina', 'combustivel', 'ipiranga', 'shell'],
+            'alimentação' => ['ifood', 'rappi', 'restaurante', 'lanchonete', 'padaria', 'mcdonalds', 'burger king'],
+            'saúde' => ['farmacia', 'drogaria', 'hospital', 'clinica', 'unimed', 'amil'],
+            'educação' => ['escola', 'faculdade', 'universidade', 'curso', 'udemy'],
+            'lazer' => ['cinema', 'netflix', 'spotify', 'amazon', 'prime', 'ingresso'],
+            'moradia' => ['energia', 'agua', 'luz', 'celg', 'copasa', 'sabesp', 'condominio', 'aluguel'],
+            'salário' => ['salario', 'pagamento', 'adiantamento', 'vale'],
+            'transferência' => ['pix', 'ted', 'doc', 'transferencia', 'transf'],
+        ];
+
+        // 1. Try to match predefined keywords to find a generic category name mapped
+        $matchedKeywordGroup = null;
+        foreach ($keywords as $group => $words) {
+            foreach ($words as $word) {
+                if (\str_contains($descLower, $word)) {
+                    $matchedKeywordGroup = $group;
+                    break 2;
+                }
+            }
+        }
+
+        // 2. Iterate through user categories
+        foreach ($this->categories as $category) {
+            // Must match the flow direction (income/expense)
+            if ($category['type'] !== $type) continue;
+            
+            $catLabelLower = strtolower($category['name']);
+
+            // Direct exact or partial match of category name in description
+            if (\str_contains($descLower, $catLabelLower)) {
+                return $category['id'];
+            }
+
+            // Indirect match via predefined keywords group
+            if ($matchedKeywordGroup && \str_contains($catLabelLower, $matchedKeywordGroup)) {
+                return $category['id'];
+            }
+        }
+
+        return null;
+    }
+
+    public function cancelPreview()
+    {
+        $this->isPreviewing = false;
+        $this->parsedTransactions = [];
+        $this->file = null;
+    }
+
+    public function confirmImport()
+    {
+        /** @var \App\Models\User $user */
+        $user = Auth::user();
+        $account = Account::findOrFail($this->accountId);
+
+        if ($account->profile_id !== $user->currentProfile()->id) {
+            abort(403);
+        }
+
+        $imported = 0;
+        $skipped = 0;
+
+        foreach ($this->parsedTransactions as $tx) {
+            if ($tx['import']) {
+                Transaction::create([
+                    'profile_id' => $user->currentProfile()->id,
+                    'account_id' => $this->accountId,
+                    'category_id' => $tx['category_id'] ?: null,
+                    'type' => $tx['type'],
+                    'amount' => $tx['amount'],
+                    'description' => $tx['description'],
+                    'date' => $tx['date'],
+                    'is_imported' => true // Distinguishes imported vs manual
+                ]);
+                $imported++;
+
+                // Update account balance
+                if ($tx['type'] === 'expense') {
+                    $account->balance -= $tx['amount'];
+                } else {
+                    $account->balance += $tx['amount'];
+                }
+            } else {
+                $skipped++;
+            }
+        }
+
+        $account->save();
+        
+        $this->importCount = $imported;
+        $this->skipCount = $skipped;
+        $this->isPreviewing = false;
+        $this->parsedTransactions = [];
+        $this->file = null;
+        
+        session()->flash('success', "Importação concluída: {$imported} salvos, {$skipped} pulados.");
+        
+        $this->dispatch('account-saved'); // to refresh the main screen
+        $this->closeModal();
     }
 
     public function render()

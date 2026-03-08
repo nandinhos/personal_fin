@@ -24,7 +24,7 @@
                 <!-- Tipo -->
                 <div class="space-y-2">
                     <x-input-label value="Tipo" />
-                    <div class="grid grid-cols-3 gap-2">
+                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-2">
                         <label class="cursor-pointer">
                             <input type="radio" name="type" value="expense" x-model="type" class="sr-only" {{ old('type', 'expense') === 'expense' ? 'checked' : '' }}>
                             <div :class="type === 'expense' ? 'border-rose-500 bg-rose-500/10 text-rose-500 dark:text-rose-400' : 'border-black/10 dark:border-white/10 text-slate-600 dark:text-slate-400 hover:border-black/20 dark:hover:border-white/20 bg-black/5 dark:bg-white/5'"

@@ -7,6 +7,7 @@ use App\Models\Category;
 use App\Models\Transaction;
 use Livewire\Component;
 use Livewire\Attributes\On;
+use Illuminate\Support\Facades\Auth;
 
 class QuickTransactionForm extends Component
 {
@@ -48,7 +49,7 @@ class QuickTransactionForm extends Component
         $validatedData = $this->validate();
 
         /** @var \App\Models\User|null $user */
-        $user = auth()->user();
+        $user = Auth::user();
         
         $account = Account::findOrFail($this->accountId);
 
@@ -67,13 +68,8 @@ class QuickTransactionForm extends Component
             'date' => $this->date,
         ]);
 
-        // Atualizar saldo
-        if ($this->type === 'expense') {
-            $account->balance -= $this->amount;
-        } else {
-            $account->balance += $this->amount;
-        }
-        $account->save();
+        // Atualizar saldo de forma robusta
+        $account->recalculateBalance();
 
         session()->flash('success', 'Lançamento registrado com sucesso!');
         
@@ -84,7 +80,7 @@ class QuickTransactionForm extends Component
     public function render()
     {
         /** @var \App\Models\User $user */
-        $user = auth()->user();
+        $user = Auth::user();
 
         $categories = Category::where('profile_id', $user->currentProfile()->id)
             ->where('type', $this->type)

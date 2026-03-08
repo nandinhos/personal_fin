@@ -6,6 +6,8 @@ use App\Models\Account;
 use Livewire\Component;
 use Livewire\WithPagination;
 
+use Illuminate\Support\Facades\Auth;
+
 class AccountList extends Component
 {
     use WithPagination;
@@ -18,7 +20,7 @@ class AccountList extends Component
     public function deleteAccount($id)
     {
         /** @var \App\Models\User $user */
-        $user = auth()->user();
+        $user = Auth::user();
         $account = Account::where('profile_id', $user->currentProfile()->id)->find($id);
         
         if ($account) {
@@ -30,7 +32,7 @@ class AccountList extends Component
     public function render()
     {
         /** @var \App\Models\User $user */
-        $user = auth()->user();
+        $user = Auth::user();
         
         $accounts = Account::where('profile_id', $user->currentProfile()->id)
             ->latest()

@@ -45,12 +45,18 @@
                         </div>
                     </div>
                     
-                    <div class="mt-2 pt-4 border-t border-black/5 dark:border-white/10 flex items-end justify-between">
-                        <div>
-                            <p class="text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-1">Saldo Atual</p>
-                            <p class="text-2xl sm:text-3xl font-black {{ $account->balance < 0 ? 'text-red-500 dark:text-red-400' : 'text-slate-900 dark:text-white' }} tracking-tight">
-                                {{ 'R$ ' . number_format($account->balance, 2, ',', '.') }}
+                    <div class="mt-2 pt-4 border-t border-black/5 dark:border-white/10 flex flex-wrap gap-x-6 gap-y-4 items-end justify-between">
+                        <div class="flex-1 min-w-[120px]">
+                            <p class="text-[10px] font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500 mb-1">Saldo Inicial</p>
+                            <p class="text-xs font-bold text-slate-500 dark:text-slate-400">
+                                {{ 'R$ ' . number_format($account->initial_balance, 2, ',', '.') }}
                             </p>
+                            <div class="mt-2">
+                                <p class="text-[10px] font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500 mb-1">Saldo Atual</p>
+                                <p class="text-2xl font-black {{ $account->balance < 0 ? 'text-red-500 dark:text-red-400' : 'text-slate-900 dark:text-white' }} tracking-tight">
+                                    {{ 'R$ ' . number_format($account->balance, 2, ',', '.') }}
+                                </p>
+                            </div>
                         </div>
                         <div class="p-2 rounded-xl {{ $account->balance < 0 ? 'bg-red-500/10 text-red-500' : 'bg-emerald-500/10 text-emerald-500' }}">
                             <svg class="w-5 h-5 {{ $account->balance < 0 ? 'rotate-180' : '' }}" fill="none" viewBox="0 0 24 24" stroke="currentColor">

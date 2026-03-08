@@ -5,8 +5,10 @@ namespace App\Livewire;
 use App\Models\Account;
 use App\Models\Transaction;
 use Livewire\Component;
+use Illuminate\Support\Facades\Auth;
 use Livewire\WithPagination;
 use Livewire\Attributes\On;
+use App\Models\Category;
 
 class AccountShow extends Component
 {
@@ -18,7 +20,7 @@ class AccountShow extends Component
     public function mount(Account $account)
     {
         /** @var \App\Models\User $user */
-        $user = auth()->user();
+        $user = Auth::user();
 
         // Security check
         if ($account->profile_id !== $user->currentProfile()->id) {
@@ -61,8 +63,119 @@ class AccountShow extends Component
 
     public function importData()
     {
-        // Placeholder handler
         $this->dispatch('import-modal-open');
+    }
+
+    public $selectedTransactions = [];
+    public $selectAll = false;
+
+    public function updatedSelectAll($value)
+    {
+        if ($value) {
+            $this->selectedTransactions = Transaction::where(function ($query) {
+                    $query->where('account_id', $this->account->id)
+                          ->orWhere('to_account_id', $this->account->id);
+                })
+                ->pluck('id')
+                ->map(fn($id) => (string) $id)
+                ->toArray();
+        } else {
+            $this->selectedTransactions = [];
+        }
+    }
+
+    public function deleteSelectedTransactions()
+    {
+        /** @var \App\Models\User $user */
+        $user = Auth::user();
+
+        if (empty($this->selectedTransactions)) {
+            return;
+        }
+
+        Transaction::whereIn('id', $this->selectedTransactions)->delete();
+
+        $this->account->recalculateBalance();
+        $this->selectedTransactions = [];
+        $this->selectAll = false;
+
+        session()->flash('success', 'Lançamentos selecionados foram excluídos com sucesso.');
+    }
+
+    public function deleteTransaction($id)
+    {
+        $tx = Transaction::findOrFail($id);
+        $tx->delete();
+        $this->account->recalculateBalance();
+
+        session()->flash('success', 'Lançamento excluído com sucesso.');
+    }
+
+    public $editingTransactionId = null;
+    public $editDescription = '';
+    public $editCategoryId = '';
+    public $editAmount = '';
+    public $editDate = '';
+    public $editType = '';
+    public $editIsImported = false;
+
+    public function editTransaction($id)
+    {
+        $tx = Transaction::findOrFail($id);
+        
+        $this->editingTransactionId = $tx->id;
+        $this->editDescription = $tx->description;
+        $this->editCategoryId = $tx->category_id;
+        $this->editAmount = $tx->amount;
+        $this->editDate = $tx->date->format('Y-m-d');
+        $this->editType = $tx->type;
+        $this->editIsImported = $tx->is_imported;
+    }
+
+    public function cancelEditTransaction()
+    {
+        $this->reset(['editingTransactionId', 'editDescription', 'editCategoryId', 'editAmount', 'editDate', 'editType', 'editIsImported']);
+    }
+
+    public function updateTransaction()
+    {
+        $tx = Transaction::findOrFail($this->editingTransactionId);
+
+        // Security check
+        if ($tx->account_id !== $this->account->id && $tx->to_account_id !== $this->account->id) {
+            abort(403);
+        }
+
+        if ($tx->is_imported) {
+            $this->validate([
+                'editDescription' => 'required|string|max:255',
+            ]);
+            $tx->update([
+                'description' => $this->editDescription,
+                'category_id' => $this->editCategoryId ?: null,
+            ]);
+        } else {
+             $this->validate([
+                'editDescription' => 'required|string|max:255',
+                'editAmount' => 'required|numeric|min:0.01',
+                'editDate' => 'required|date',
+                'editType' => 'required|in:income,expense',
+            ]);
+
+            // Update tx 
+            $tx->update([
+                 'description' => $this->editDescription,
+                 'category_id' => $this->editCategoryId ?: null,
+                 'amount' => $this->editAmount,
+                 'date' => $this->editDate,
+                 'type' => $this->editType,
+            ]);
+
+            $this->account->recalculateBalance();
+        }
+
+        $this->cancelEditTransaction();
+        session()->flash('success', 'Lançamento atualizado com sucesso.');
     }
 
     public function exportData()
@@ -132,8 +245,16 @@ class AccountShow extends Component
             ->latest('id')
             ->paginate(15);
 
+        /** @var \App\Models\User $user */
+        $user = Auth::user();
+
+        $categories = Category::where('profile_id', $user->currentProfile()->id)
+            ->orderBy('name')
+            ->get();
+
         return view('livewire.account-show', [
-            'transactions' => $transactions
+            'transactions' => $transactions,
+            'categories' => $categories
         ])->layout('layouts.app', ['header' => 'Detalhes da Conta']);
     }
 }

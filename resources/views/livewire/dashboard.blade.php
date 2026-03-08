@@ -122,7 +122,7 @@
         <div class="space-y-8">
             <div class="glass-panel p-8 rounded-[2.5rem]">
                 <h3 class="text-[10px] font-black text-slate-500 uppercase tracking-[0.2em] mb-8">Painel de Ações</h3>
-                <div class="grid grid-cols-3 gap-4">
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
                     <button wire:click="openQuickTransactionModal('income')" class="flex flex-col items-center justify-center p-5 rounded-2xl glass-panel border-white/5 hover:border-emerald-500/50 hover:bg-emerald-500/10 transition-all group">
                         <div class="w-10 h-10 rounded-full bg-emerald-500/10 flex items-center justify-center mb-3 group-hover:scale-110 transition-transform">
                             <svg class="w-5 h-5 text-emerald-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
