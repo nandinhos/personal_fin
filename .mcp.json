@@ -30,19 +30,19 @@
     "laravel-boost": {
       "command": "docker",
       "args": [
-        "compose",
         "exec",
-        "-T",
-        "laravel.test",
+        "-i",
+        "personal_fin-laravel.test-1",
         "php",
-        "artisan",
+        "/var/www/html/artisan",
         "mcp:start",
-        "boost"
+        "laravel-boost"
       ],
       "env": {
         "WWWUSER": "1000",
         "WWWGROUP": "1000"
-      }
+      },
+      "disabledTools": []
     }
   },
   "projectConfig": {
