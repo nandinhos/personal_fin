@@ -28,6 +28,13 @@ class CardController extends Controller
         return view('cards.create');
     }
 
+    public function edit(Card $card)
+    {
+        abort_if($card->profile->user_id !== auth()->id(), 403);
+
+        return view('cards.edit', compact('card'));
+    }
+
     public function store(Request $request)
     {
         $profile = auth()->user()->profiles()->firstOrCreate(
@@ -80,17 +87,29 @@ class CardController extends Controller
             'is_active' => 'sometimes|boolean',
         ]);
 
+        if (!$request->has('is_active') && $request->isMethod('PUT')) {
+            $validated['is_active'] = false;
+        }
+
         $card->update($validated);
 
-        return response()->json($card);
+        if ($request->expectsJson()) {
+            return response()->json($card);
+        }
+
+        return redirect()->route('cards.index')->with('success', 'Cartão atualizado com sucesso!');
     }
 
-    public function destroy(Card $card)
+    public function destroy(Request $request, Card $card)
     {
         abort_if($card->profile->user_id !== auth()->id(), 403);
 
         $card->delete();
 
-        return response()->json(null, 204);
+        if ($request->expectsJson()) {
+            return response()->json(null, 204);
+        }
+
+        return redirect()->route('cards.index')->with('success', 'Cartão excluído com sucesso!');
     }
 }

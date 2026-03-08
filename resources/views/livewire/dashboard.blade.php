@@ -1,248 +1,255 @@
-<div class="space-y-6">
-    <header class="mb-8">
-        <h1 class="text-3xl font-bold tracking-tight text-white">Dashboard Financeiro</h1>
-        <p class="mt-2 text-sm text-slate-400">Bem-vindo de volta! Aqui está um resumo das suas finanças.</p>
+<div class="space-y-8 pb-20">
+    <header class="relative mb-8 py-4">
+        <div class="absolute -top-10 -left-10 w-64 h-64 bg-obsidian-primary/20 blur-[100px] pointer-events-none rounded-full"></div>
+        <h1 class="text-4xl font-black tracking-tight text-slate-900 dark:text-white glow-text">Painel de Controle</h1>
+        <p class="mt-2 text-base text-slate-600 dark:text-slate-400 font-medium font-italic">Gestão centralizada das suas finanças. Status: <span class="text-obsidian-primary font-bold">Operacional</span></p>
     </header>
 
-    <div class="grid grid-cols-2 gap-3 mb-6 lg:grid-cols-4 lg:gap-6">
-        <div class="p-4 lg:p-6 transition-all border group bg-slate-800/50 backdrop-blur-sm border-slate-700/50 rounded-xl lg:rounded-2xl hover:border-indigo-500/50 hover:bg-slate-800/80">
-            <div class="flex items-center justify-between mb-2 lg:mb-4">
-                <span class="inline-flex items-center justify-center p-1.5 lg:p-2 bg-indigo-500/10 rounded-lg lg:rounded-xl">
-                    <svg class="w-4 h-4 lg:w-6 lg:h-6 text-indigo-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+    <div class="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4">
+        <!-- Saldo Total -->
+        <div class="glass-panel p-8 group relative overflow-hidden">
+            <div class="absolute top-0 right-0 w-32 h-32 bg-obsidian-primary/5 blur-3xl rounded-full -mr-10 -mt-10 group-hover:bg-obsidian-primary/10 transition-all"></div>
+            <div class="flex items-center justify-between mb-6">
+                <div class="p-3 rounded-2xl bg-obsidian-primary/10 border border-obsidian-primary/20">
+                    <svg class="w-8 h-8 text-obsidian-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                     </svg>
-                </span>
+                </div>
+                <div class="opacity-30 group-hover:opacity-100 transition-opacity">
+                    <span class="text-[10px] font-black uppercase tracking-widest text-obsidian-primary">Saldo</span>
+                </div>
             </div>
-            <h3 class="text-xs lg:text-sm font-medium text-slate-400">Saldo</h3>
-            <p class="mt-1 text-lg lg:text-2xl font-semibold text-white">R$ {{ number_format($totalBalance, 2, ',', '.') }}</p>
+            <h3 class="text-xs font-bold text-slate-600 dark:text-slate-400 uppercase tracking-widest">Patrimônio Líquido</h3>
+            <p class="mt-2 text-3xl font-black text-slate-900 dark:text-white tabular-nums tracking-tight">R$ {{ number_format($totalBalance, 2, ',', '.') }}</p>
         </div>
 
-        <div class="p-4 lg:p-6 transition-all border group bg-slate-800/50 backdrop-blur-sm border-slate-700/50 rounded-xl lg:rounded-2xl hover:border-emerald-500/50 hover:bg-slate-800/80 cursor-pointer" onclick="window.location.href='{{ route('transactions.index') }}?type=income'">
-            <div class="flex items-center justify-between mb-2 lg:mb-4">
-                <span class="inline-flex items-center justify-center p-1.5 lg:p-2 bg-emerald-500/10 rounded-lg lg:rounded-xl">
-                    <svg class="w-4 h-4 lg:w-6 lg:h-6 text-emerald-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
+        <!-- Receitas -->
+        <div class="glass-panel p-8 group cursor-pointer relative overflow-hidden" onclick="window.location.href='{{ route('transactions.index') }}?type=income'">
+            <div class="absolute top-0 right-0 w-32 h-32 bg-emerald-500/5 blur-3xl rounded-full -mr-10 -mt-10 group-hover:bg-emerald-500/10 transition-all"></div>
+            <div class="flex items-center justify-between mb-6">
+                <div class="p-3 rounded-2xl bg-emerald-500/10 border border-emerald-500/20">
+                    <svg class="w-8 h-8 text-emerald-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
                     </svg>
-                </span>
+                </div>
+                <div class="text-[10px] font-black uppercase tracking-widest text-emerald-400">Ganhos</div>
             </div>
-            <h3 class="text-xs lg:text-sm font-medium text-slate-400">Receitas</h3>
-            <p class="mt-1 text-lg lg:text-2xl font-semibold text-emerald-400">R$ {{ number_format($monthlyIncome, 2, ',', '.') }}</p>
+            <h3 class="text-xs font-bold text-slate-600 dark:text-slate-400 uppercase tracking-widest">Entradas do Mês</h3>
+            <p class="mt-2 text-3xl font-black text-emerald-600 dark:text-emerald-400 tabular-nums tracking-tight">R$ {{ number_format($monthlyIncome, 2, ',', '.') }}</p>
         </div>
 
-        <div class="p-4 lg:p-6 transition-all border group bg-slate-800/50 backdrop-blur-sm border-slate-700/50 rounded-xl lg:rounded-2xl hover:border-rose-500/50 hover:bg-slate-800/80 cursor-pointer" onclick="window.location.href='{{ route('transactions.index') }}?type=expense'">
-            <div class="flex items-center justify-between mb-2 lg:mb-4">
-                <span class="inline-flex items-center justify-center p-1.5 lg:p-2 bg-rose-500/10 rounded-lg lg:rounded-xl">
-                    <svg class="w-4 h-4 lg:w-6 lg:h-6 text-rose-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 17h8m0 0v-8m0 8l-8-8-4 4-6-6" />
+        <!-- Despesas -->
+        <div class="glass-panel p-8 group cursor-pointer relative overflow-hidden" onclick="window.location.href='{{ route('transactions.index') }}?type=expense'">
+            <div class="absolute top-0 right-0 w-32 h-32 bg-rose-500/5 blur-3xl rounded-full -mr-10 -mt-10 group-hover:bg-rose-500/10 transition-all"></div>
+            <div class="flex items-center justify-between mb-6">
+                <div class="p-3 rounded-2xl bg-rose-500/10 border border-rose-500/20">
+                    <svg class="w-8 h-8 text-rose-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M13 17h8m0 0v-8m0 8l-8-8-4 4-6-6" />
                     </svg>
-                </span>
+                </div>
+                <div class="text-[10px] font-black uppercase tracking-widest text-rose-400">Gastos</div>
             </div>
-            <h3 class="text-xs lg:text-sm font-medium text-slate-400">Despesas</h3>
-            <p class="mt-1 text-lg lg:text-2xl font-semibold text-rose-400">R$ {{ number_format($monthlyExpenses, 2, ',', '.') }}</p>
+            <h3 class="text-xs font-bold text-slate-600 dark:text-slate-400 uppercase tracking-widest">Saídas do Mês</h3>
+            <p class="mt-2 text-3xl font-black text-rose-600 dark:text-rose-400 tabular-nums tracking-tight">R$ {{ number_format($monthlyExpenses, 2, ',', '.') }}</p>
         </div>
 
-        <div class="p-4 lg:p-6 transition-all border group bg-slate-800/50 backdrop-blur-sm border-slate-700/50 rounded-xl lg:rounded-2xl hover:border-amber-500/50 hover:bg-slate-800/80 cursor-pointer" onclick="window.location.href='{{ route('goals.index') }}'">
-            <div class="flex items-center justify-between mb-2 lg:mb-4">
-                <span class="inline-flex items-center justify-center p-1.5 lg:p-2 bg-amber-500/10 rounded-lg lg:rounded-xl">
-                    <svg class="w-4 h-4 lg:w-6 lg:h-6 text-amber-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+        <!-- Metas -->
+        <div class="glass-panel p-8 group cursor-pointer relative overflow-hidden" onclick="window.location.href='{{ route('goals.index') }}'">
+            <div class="absolute top-0 right-0 w-32 h-32 bg-amber-500/5 blur-3xl rounded-full -mr-10 -mt-10 group-hover:bg-amber-500/10 transition-all"></div>
+            <div class="flex items-center justify-between mb-6">
+                <div class="p-3 rounded-2xl bg-amber-500/10 border border-amber-500/20">
+                    <svg class="w-8 h-8 text-amber-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
                     </svg>
-                </span>
+                </div>
+                <div class="text-[10px] font-black uppercase tracking-widest text-amber-400">Progresso</div>
             </div>
-            <h3 class="text-xs lg:text-sm font-medium text-slate-400">Metas</h3>
-            <p class="mt-1 text-lg lg:text-2xl font-semibold text-white">{{ $goalsProgress }}%</p>
+            <h3 class="text-xs font-bold text-slate-600 dark:text-slate-400 uppercase tracking-widest">Objetivos</h3>
+            <div class="mt-2 flex items-baseline gap-2">
+                <p class="text-3xl font-black text-slate-900 dark:text-white tabular-nums tracking-tight">{{ $goalsProgress }}%</p>
+                <div class="flex-1 h-2 rounded-full bg-slate-200 dark:bg-white/10 overflow-hidden">
+                    <div class="h-full bg-amber-500 shadow-[0_0_10px_#f59e0b] duration-1000 transition-all" style="width: {{ $goalsProgress }}%"></div>
+                </div>
+            </div>
         </div>
     </div>
 
     <div class="grid grid-cols-1 gap-8 lg:grid-cols-3">
-        <div class="lg:col-span-2 overflow-hidden border bg-slate-800/50 backdrop-blur-sm border-slate-700/50 rounded-2xl">
-            <div class="flex items-center justify-between p-6 border-b border-slate-700/50">
-                <h3 class="text-lg font-semibold text-white">Transações Recentes</h3>
-                <button class="text-sm font-medium text-indigo-400 hover:text-indigo-300">Ver todas</button>
+        <!-- Registro Financeiro -->
+        <div class="lg:col-span-2 glass-panel rounded-[2.5rem] overflow-hidden">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between p-8 border-b border-white/5">
+                <div>
+                    <h3 class="text-xl font-black text-slate-900 dark:text-white tracking-tight">Registros Recentes</h3>
+                    <p class="text-xs text-slate-500 font-bold uppercase tracking-widest mt-1">Últimas transações no sistema</p>
+                </div>
+                <a href="{{ route('transactions.index') }}" class="glass-button text-[10px] py-3 px-6 uppercase tracking-widest font-black mt-4 sm:mt-0">Ver Tudo</a>
             </div>
-            <div class="divide-y divide-slate-700/50">
+            <div class="divide-y divide-white/5">
                 @forelse($recentTransactions as $item)
-                    <div class="flex items-center justify-between p-6 transition-colors hover:bg-slate-700/20">
-                        <div class="flex items-center gap-4">
-                            <div class="flex-shrink-0 w-10 h-10 rounded-full bg-slate-700/50 flex items-center justify-center">
-                                <span class="text-lg">{{ $item['type'] === 'income' ? '💰' : '💸' }}</span>
+                    <div class="flex items-center justify-between p-8 transition-all hover:bg-white/[0.02]">
+                        <div class="flex items-center gap-6">
+                            <div class="w-14 h-14 rounded-2xl glass-panel border-white/10 flex items-center justify-center text-xl">
+                                {{ $item['type'] === 'income' ? '💰' : '💸' }}
                             </div>
                             <div>
-                                <p class="text-sm font-medium text-white">{{ $item['name'] }}</p>
-                                <p class="text-xs text-slate-500">{{ $item['category'] }} • {{ $item['date'] }}</p>
+                                <p class="text-base font-black text-slate-900 dark:text-white">{{ $item['name'] }}</p>
+                                <p class="text-[10px] font-bold text-slate-500 flex items-center gap-2 mt-1 uppercase tracking-widest">
+                                    <span class="px-2 py-0.5 rounded-lg bg-obsidian-primary/10 border border-obsidian-primary/20 text-obsidian-primary">{{ $item['category'] }}</span>
+                                    <span>{{ $item['date'] }}</span>
+                                </p>
                             </div>
                         </div>
                         <div class="text-right">
-                            <p class="text-sm font-semibold {{ $item['amount'] > 0 ? 'text-emerald-400' : 'text-rose-400' }}">
+                            <p class="text-lg font-black tabular-nums {{ $item['amount'] > 0 ? 'text-emerald-400' : 'text-rose-400' }}">
                                 {{ $item['amount'] > 0 ? '+' : '' }}R$ {{ number_format(abs($item['amount']), 2, ',', '.') }}
                             </p>
                         </div>
                     </div>
                 @empty
-                    <p class="p-6 text-sm text-slate-500 text-center">Nenhuma transação encontrada.</p>
+                    <div class="p-16 text-center">
+                        <div class="w-20 h-20 bg-white/5 rounded-full flex items-center justify-center mx-auto mb-4 border border-white/5">
+                            <svg class="w-10 h-10 text-slate-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                            </svg>
+                        </div>
+                        <p class="text-slate-500 font-bold uppercase tracking-widest text-xs">Nenhum registro encontrado</p>
+                    </div>
                 @endforelse
             </div>
         </div>
 
-        <div class="space-y-6">
-            <div class="p-6 border bg-slate-800/50 backdrop-blur-sm border-slate-700/50 rounded-2xl">
-                <h3 class="mb-4 text-lg font-semibold text-white">Ações Rápidas</h3>
-                <div class="grid grid-cols-3 gap-3">
-                    <button wire:click="openQuickTransactionModal('income')" class="flex flex-col items-center justify-center p-3 transition-all border border-slate-700 rounded-xl hover:bg-emerald-500/10 hover:border-emerald-500/50 group cursor-pointer">
-                        <svg class="w-5 h-5 mb-1.5 text-slate-400 group-hover:text-emerald-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 11l5-5m0 0l5 5m-5-5v12" />
-                        </svg>
-                        <span class="text-xs font-medium text-slate-400 group-hover:text-white">Receita</span>
+        <!-- Painel de Ações & Margem -->
+        <div class="space-y-8">
+            <div class="glass-panel p-8 rounded-[2.5rem]">
+                <h3 class="text-[10px] font-black text-slate-500 uppercase tracking-[0.2em] mb-8">Painel de Ações</h3>
+                <div class="grid grid-cols-3 gap-4">
+                    <button wire:click="openQuickTransactionModal('income')" class="flex flex-col items-center justify-center p-5 rounded-2xl glass-panel border-white/5 hover:border-emerald-500/50 hover:bg-emerald-500/10 transition-all group">
+                        <div class="w-10 h-10 rounded-full bg-emerald-500/10 flex items-center justify-center mb-3 group-hover:scale-110 transition-transform">
+                            <svg class="w-5 h-5 text-emerald-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 4v16m8-8H4" />
+                            </svg>
+                        </div>
+                        <span class="text-[10px] font-black uppercase tracking-widest text-slate-500 group-hover:text-slate-900 dark:group-hover:text-white transition-colors">Receita</span>
                     </button>
-                    <button wire:click="openQuickTransactionModal('expense')" class="flex flex-col items-center justify-center p-3 transition-all border border-slate-700 rounded-xl hover:bg-rose-500/10 hover:border-rose-500/50 group cursor-pointer">
-                        <svg class="w-5 h-5 mb-1.5 text-slate-400 group-hover:text-rose-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 13l-5 5m0 0l-5-5m5 5V6" />
-                        </svg>
-                        <span class="text-xs font-medium text-slate-400 group-hover:text-white">Despesa</span>
+                    <button wire:click="openQuickTransactionModal('expense')" class="flex flex-col items-center justify-center p-5 rounded-2xl glass-panel border-white/5 hover:border-rose-500/50 hover:bg-rose-500/10 transition-all group">
+                        <div class="w-10 h-10 rounded-full bg-rose-500/10 flex items-center justify-center mb-3 group-hover:scale-110 transition-transform">
+                            <svg class="w-5 h-5 text-rose-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M20 12H4" />
+                            </svg>
+                        </div>
+                        <span class="text-[10px] font-black uppercase tracking-widest text-slate-500 group-hover:text-slate-900 dark:group-hover:text-white transition-colors">Despesa</span>
                     </button>
-                    <button wire:click="openQuickTransactionModal('transfer')" class="flex flex-col items-center justify-center p-3 transition-all border border-slate-700 rounded-xl hover:bg-indigo-500/10 hover:border-indigo-500/50 group cursor-pointer">
-                        <svg class="w-5 h-5 mb-1.5 text-slate-400 group-hover:text-indigo-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4" />
-                        </svg>
-                        <span class="text-xs font-medium text-slate-400 group-hover:text-white">Transfer</span>
+                    <button wire:click="openQuickTransactionModal('transfer')" class="flex flex-col items-center justify-center p-5 rounded-2xl glass-panel border-white/5 hover:border-obsidian-primary/50 hover:bg-obsidian-primary/10 transition-all group">
+                        <div class="w-10 h-10 rounded-full bg-obsidian-primary/10 flex items-center justify-center mb-3 group-hover:scale-110 transition-transform">
+                            <svg class="w-5 h-5 text-obsidian-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4" />
+                            </svg>
+                        </div>
+                        <span class="text-[10px] font-black uppercase tracking-widest text-slate-500 group-hover:text-slate-900 dark:group-hover:text-white transition-colors">Trocar</span>
                     </button>
                 </div>
             </div>
 
-            <div class="p-6 border bg-slate-800/50 backdrop-blur-sm border-slate-700/50 rounded-2xl">
-                <a href="{{ route('limits.index') }}" class="block cursor-pointer">
-                    <div class="flex items-center justify-between mb-4">
-                        <h3 class="text-sm font-semibold text-white">Limite Mensal</h3>
-                        <span class="text-xs text-slate-500">{{ $monthlyLimitPercent }}% usado</span>
+            <div class="glass-panel p-8 rounded-[2.5rem] relative overflow-hidden group">
+                <a href="{{ route('limits.index') }}" class="block relative z-10">
+                    <div class="flex items-center justify-between mb-6">
+                        <h3 class="text-[10px] font-black text-slate-500 uppercase tracking-[0.2em]">Status de Margem</h3>
+                        <span class="text-xs font-black text-obsidian-primary">{{ $monthlyLimitPercent }}%</span>
                     </div>
-                    <div class="w-full h-2 rounded-full bg-slate-700 overflow-hidden">
-                        <div class="h-2 rounded-full bg-indigo-500 transition-all duration-300" style="width: {{ min($monthlyLimitPercent, 100) }}%"></div>
+                    <div class="w-full h-3 rounded-full bg-slate-300 dark:bg-white/10 overflow-hidden">
+                        <div class="h-full rounded-full bg-gradient-to-r from-obsidian-primary to-emerald-400 shadow-[0_0_12px_rgba(5,183,214,0.6)] transition-all duration-1000" style="width: {{ max(min($monthlyLimitPercent, 100), 2) }}%"></div>
                     </div>
                 </a>
-                <p class="mt-4 text-xs text-slate-500">Você ainda tem R$ {{ number_format($monthlyLimitAvailable, 2, ',', '.') }} disponíveis para gastos este mês.</p>
+                <p class="mt-6 text-[11px] text-slate-500 font-bold uppercase tracking-widest leading-loose">
+                    Sobram <span class="text-slate-900 dark:text-white">R$ {{ number_format($monthlyLimitAvailable, 2, ',', '.') }}</span> para o ciclo atual.
+                </p>
             </div>
         </div>
     </div>
 
     @if($showQuickTransactionModal)
-        <div class="fixed inset-0 z-50 flex items-center justify-center p-4">
-            <div class="absolute inset-0 bg-black/60 backdrop-blur-sm" wire:click="closeQuickTransactionModal"></div>
-            <div class="relative bg-slate-800 border border-slate-700 rounded-2xl w-full max-w-md p-6 shadow-2xl">
-                <h2 class="text-xl font-semibold text-white mb-6">
+        <div class="fixed inset-0 z-[60] flex items-center justify-center p-4">
+            <div class="absolute inset-0 bg-black/60 backdrop-blur-md" wire:click="closeQuickTransactionModal"></div>
+            <div class="relative glass-panel rounded-[2.5rem] w-full max-w-lg p-10 overflow-hidden">
+                <div class="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-obsidian-primary to-emerald-400"></div>
+                
+                <h2 class="text-3xl font-black text-slate-900 dark:text-white mb-8 tracking-tight">
                     @if($quickTransactionType === 'income')
-                        Nova Receita
+                        💰 Nova Receita
                     @elseif($quickTransactionType === 'expense')
-                        Nova Despesa
+                        💸 Nova Despesa
                     @else
-                        Nova Transferência
+                        🔄 Transferência
                     @endif
                 </h2>
                 
-                <form wire:submit.prevent="saveQuickTransaction" class="space-y-4">
-                    <div>
-                        <label class="block text-sm font-medium text-slate-400 mb-2">Descrição</label>
-                        <input 
-                            type="text" 
-                            wire:model="quickForm.description"
-                            class="w-full px-4 py-3 bg-slate-700/50 border border-slate-600 rounded-xl text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
-                            placeholder="Ex: Supermercado, Salário...">
-                        @error('quickForm.description')
-                            <p class="mt-1 text-sm text-rose-400">{{ $message }}</p>
-                        @enderror
+                <form wire:submit.prevent="saveQuickTransaction" class="space-y-6">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div class="md:col-span-2">
+                            <x-input-label for="q-desc" value="Descrição da Atividade" />
+                            <x-text-input id="q-desc" type="text" wire:model="quickForm.description" placeholder="Ex: Supermercado, Aluguel..." />
+                            @error('quickForm.description') <p class="mt-2 text-xs font-bold text-rose-500">{{ $message }}</p> @enderror
+                        </div>
+
+                        <div>
+                            <x-input-label for="q-amount" value="Valor (R$)" />
+                            <x-text-input id="q-amount" type="number" step="0.01" min="0.01" wire:model="quickForm.amount" placeholder="0,00" />
+                            @error('quickForm.amount') <p class="mt-2 text-xs font-bold text-rose-500">{{ $message }}</p> @enderror
+                        </div>
+
+                        <div>
+                            <x-input-label for="q-date" value="Data" />
+                            <x-text-input id="q-date" type="date" wire:model="quickForm.date" />
+                            @error('quickForm.date') <p class="mt-2 text-xs font-bold text-rose-500">{{ $message }}</p> @enderror
+                        </div>
+
+                        @if($quickTransactionType !== 'transfer')
+                        <div class="md:col-span-2">
+                            <x-input-label for="q-cat" value="Categoria" />
+                            <select id="q-cat" wire:model="quickForm.category_id" class="w-full px-5 py-4 bg-slate-100 dark:bg-white/5 border border-slate-300 dark:border-white/10 rounded-2xl text-slate-900 dark:text-white font-bold focus:outline-none focus:ring-2 focus:ring-obsidian-primary transition-all appearance-none cursor-pointer">
+                                <option value="" class="text-slate-900 dark:text-white bg-white dark:bg-slate-900">Selecione...</option>
+                                @foreach($categories as $cat)
+                                    @if($cat['type'] === $quickTransactionType)
+                                        <option value="{{ $cat['id'] }}" class="text-slate-900 dark:text-white bg-white dark:bg-slate-900">{{ $cat['name'] }}</option>
+                                    @endif
+                                @endforeach
+                            </select>
+                            @error('quickForm.category_id') <p class="mt-2 text-xs font-bold text-rose-500">{{ $message }}</p> @enderror
+                        </div>
+                        @endif
+
+                        <div class="{{ $quickTransactionType === 'transfer' ? 'md:col-span-1' : 'md:col-span-2' }}">
+                            <x-input-label for="q-acc" :value="$quickTransactionType === 'transfer' ? 'Conta Origem' : 'Conta Responsável'" />
+                            <select id="q-acc" wire:model="quickForm.account_id" class="w-full px-5 py-4 bg-slate-100 dark:bg-white/5 border border-slate-300 dark:border-white/10 rounded-2xl text-slate-900 dark:text-white font-bold focus:outline-none focus:ring-2 focus:ring-obsidian-primary transition-all appearance-none cursor-pointer">
+                                @foreach($accounts as $acc)
+                                    <option value="{{ $acc['id'] }}" class="text-slate-900 dark:text-white bg-white dark:bg-slate-900">{{ $acc['name'] }}</option>
+                                @endforeach
+                            </select>
+                            @error('quickForm.account_id') <p class="mt-2 text-xs font-bold text-rose-500">{{ $message }}</p> @enderror
+                        </div>
+
+                        @if($quickTransactionType === 'transfer')
+                        <div>
+                            <x-input-label for="q-to-acc" value="Conta Destino" />
+                            <select id="q-to-acc" wire:model="quickForm.to_account_id" class="w-full px-5 py-4 bg-slate-100 dark:bg-white/5 border border-slate-300 dark:border-white/10 rounded-2xl text-slate-900 dark:text-white font-bold focus:outline-none focus:ring-2 focus:ring-obsidian-primary transition-all appearance-none cursor-pointer">
+                                <option value="" class="text-slate-900 dark:text-white bg-white dark:bg-slate-900">Selecione...</option>
+                                @foreach($accounts as $acc)
+                                    @if($acc['id'] != $quickForm['account_id'])
+                                        <option value="{{ $acc['id'] }}" class="text-slate-900 dark:text-white bg-white dark:bg-slate-900">{{ $acc['name'] }}</option>
+                                    @endif
+                                @endforeach
+                            </select>
+                            @error('quickForm.to_account_id') <p class="mt-2 text-xs font-bold text-rose-500">{{ $message }}</p> @enderror
+                        </div>
+                        @endif
                     </div>
 
-                    <div>
-                        <label class="block text-sm font-medium text-slate-400 mb-2">Valor</label>
-                        <input 
-                            type="number" 
-                            step="0.01"
-                            min="0.01"
-                            wire:model="quickForm.amount"
-                            class="w-full px-4 py-3 bg-slate-700/50 border border-slate-600 rounded-xl text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
-                            placeholder="0,00">
-                        @error('quickForm.amount')
-                            <p class="mt-1 text-sm text-rose-400">{{ $message }}</p>
-                        @enderror
-                    </div>
-
-                    @if($quickTransactionType !== 'transfer')
-                    <div>
-                        <label class="block text-sm font-medium text-slate-400 mb-2">Categoria</label>
-                        <select 
-                            wire:model="quickForm.category_id"
-                            class="w-full px-4 py-3 bg-slate-700/50 border border-slate-600 rounded-xl text-white focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent">
-                            <option value="">Selecione...</option>
-                            @foreach($categories as $cat)
-                                @if($cat['type'] === $quickTransactionType)
-                                    <option value="{{ $cat['id'] }}">{{ $cat['name'] }}</option>
-                                @endif
-                            @endforeach
-                        </select>
-                        @error('quickForm.category_id')
-                            <p class="mt-1 text-sm text-rose-400">{{ $message }}</p>
-                        @enderror
-                    </div>
-                    @endif
-
-                    <div>
-                        <label class="block text-sm font-medium text-slate-400 mb-2">
-                            {{ $quickTransactionType === 'transfer' ? 'Conta Origem' : 'Conta' }}
-                        </label>
-                        <select 
-                            wire:model="quickForm.account_id"
-                            class="w-full px-4 py-3 bg-slate-700/50 border border-slate-600 rounded-xl text-white focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent">
-                            @foreach($accounts as $acc)
-                                <option value="{{ $acc['id'] }}">{{ $acc['name'] }}</option>
-                            @endforeach
-                        </select>
-                        @error('quickForm.account_id')
-                            <p class="mt-1 text-sm text-rose-400">{{ $message }}</p>
-                        @enderror
-                    </div>
-
-                    @if($quickTransactionType === 'transfer')
-                    <div>
-                        <label class="block text-sm font-medium text-slate-400 mb-2">Conta Destino</label>
-                        <select 
-                            wire:model="quickForm.to_account_id"
-                            class="w-full px-4 py-3 bg-slate-700/50 border border-slate-600 rounded-xl text-white focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent">
-                            <option value="">Selecione...</option>
-                            @foreach($accounts as $acc)
-                                @if($acc['id'] != $quickForm['account_id'])
-                                    <option value="{{ $acc['id'] }}">{{ $acc['name'] }}</option>
-                                @endif
-                            @endforeach
-                        </select>
-                        @error('quickForm.to_account_id')
-                            <p class="mt-1 text-sm text-rose-400">{{ $message }}</p>
-                        @enderror
-                    </div>
-                    @endif
-
-                    <div>
-                        <label class="block text-sm font-medium text-slate-400 mb-2">Data</label>
-                        <input 
-                            type="date" 
-                            wire:model="quickForm.date"
-                            class="w-full px-4 py-3 bg-slate-700/50 border border-slate-600 rounded-xl text-white focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent">
-                        @error('quickForm.date')
-                            <p class="mt-1 text-sm text-rose-400">{{ $message }}</p>
-                        @enderror
-                    </div>
-
-                    <input type="hidden" wire:model="quickForm.type">
-
-                    <div class="flex gap-3 pt-4">
-                        <button 
-                            type="button"
-                            wire:click="closeQuickTransactionModal"
-                            class="flex-1 px-4 py-3 bg-slate-700 hover:bg-slate-600 text-white font-medium rounded-xl transition-colors">
+                    <div class="flex flex-col sm:flex-row gap-4 pt-6">
+                        <button type="button" wire:click="closeQuickTransactionModal" class="flex-1 px-8 py-4 glass-button uppercase tracking-widest text-[10px] font-black">
                             Cancelar
                         </button>
-                        <button 
-                            type="submit"
-                            class="flex-1 px-4 py-3 {{ $quickTransactionType === 'income' ? 'bg-emerald-600 hover:bg-emerald-700' : ($quickTransactionType === 'expense' ? 'bg-rose-600 hover:bg-rose-700' : 'bg-indigo-600 hover:bg-indigo-700') }} text-white font-medium rounded-xl transition-colors">
-                            Salvar
+                        <button type="submit" class="flex-1 px-8 py-4 {{ $quickTransactionType === 'income' ? 'bg-emerald-600' : ($quickTransactionType === 'expense' ? 'bg-rose-600' : 'bg-obsidian-primary') }} text-white font-black rounded-2xl shadow-lg uppercase tracking-widest text-[10px] hover:scale-[1.02] active:scale-[0.98] transition-all">
+                            Confirmar Registro
                         </button>
                     </div>
                 </form>

@@ -22,6 +22,7 @@ export default {
                     200: 'rgba(255, 255, 255, 0.2)',
                     300: 'rgba(255, 255, 255, 0.3)',
                 },
+                'obsidian-primary': 'rgb(5 183 214 / <alpha-value>)',
             },
             backdropBlur: {
                 xs: '2px',

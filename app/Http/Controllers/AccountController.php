@@ -32,6 +32,13 @@ class AccountController extends Controller
         return view('accounts.create');
     }
 
+    public function edit(Account $account)
+    {
+        abort_if($account->profile->user_id !== auth()->id(), 403);
+
+        return view('accounts.edit', compact('account'));
+    }
+
     public function store(Request $request)
     {
         $profile = auth()->user()->profiles()->firstOrCreate(
@@ -65,7 +72,7 @@ class AccountController extends Controller
         return response()->json($account);
     }
 
-    public function update(Request $request, Account $account): JsonResponse
+    public function update(Request $request, Account $account)
     {
         abort_if($account->profile->user_id !== auth()->id(), 403);
 
@@ -78,17 +85,29 @@ class AccountController extends Controller
             'is_active' => 'sometimes|boolean',
         ]);
 
+        if (!$request->has('is_active') && $request->isMethod('PUT')) {
+            $validated['is_active'] = false;
+        }
+
         $account->update($validated);
 
-        return response()->json($account);
+        if ($request->expectsJson()) {
+            return response()->json($account);
+        }
+
+        return redirect()->route('accounts.index')->with('success', 'Conta atualizada com sucesso!');
     }
 
-    public function destroy(Account $account): JsonResponse
+    public function destroy(Request $request, Account $account)
     {
         abort_if($account->profile->user_id !== auth()->id(), 403);
 
         $account->delete();
 
-        return response()->json(null, 204);
+        if ($request->expectsJson()) {
+            return response()->json(null, 204);
+        }
+
+        return redirect()->route('accounts.index')->with('success', 'Conta excluída com sucesso!');
     }
 }

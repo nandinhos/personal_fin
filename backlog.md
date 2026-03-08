@@ -22,9 +22,9 @@
 | 1.5 | Migration: subcategories | 🔴 CRÍTICA | ✅ Concluído |
 | 1.6 | Models: Profile, Category, Subcategory | 🔴 CRÍTICA | ✅ Concluído |
 | 1.7 | Controllers + Routes REST | 🟡 Média | ✅ Concluído |
-| 1.8 | Seeders categorias PT-BR | 🟡 Média | ⏳ Pendente |
-| 1.9 | Design System (Glassmorphism + Dark Mode) | 🔴 CRÍTICA | ⏳ Pendente |
-| 1.10 | Layout base com Bottom Navigation | 🔴 CRÍTICA | ⏳ Pendente |
+| 1.8 | Seeders categorias PT-BR | 🟡 Média | ✅ Concluído |
+| 1.9 | Design System (Glassmorphism + Dark Mode) | 🔴 CRÍTICA | ✅ Concluído |
+| 1.10 | Layout base com Bottom Navigation | 🔴 CRÍTICA | ✅ Concluído |
 
 ---
 
@@ -34,12 +34,12 @@
 
 | # | Tarefa | Prioridade | Status |
 |---|--------|------------|--------|
-| 2.1 | Layout Livewire + Tailwind | 🔴 CRÍTICA | ⏳ Pendente |
-| 2.2 | Bottom Navigation Mobile | 🔴 CRÍTICA | ⏳ Pendente |
-| 2.3 | Card Saldo/Receitas/Despesas (Glass) | 🔴 CRÍTICA | ⏳ Pendente |
+| 2.1 | Layout Livewire + Tailwind | 🔴 CRÍTICA | ✅ Concluído |
+| 2.2 | Bottom Navigation Mobile | 🔴 CRÍTICA | ✅ Concluído |
+| 2.3 | Card Saldo/Receitas/Despesas (Glass) | 🔴 CRÍTICA | ✅ Concluído |
 | 2.4 | Cards expansíveis (projetado/futuro) | 🟡 Média | ⏳ Pendente |
-| 2.5 | Mock data para demonstração | 🟡 Média | ⏳ Pendente |
-| 2.6 | Toggle Dark/Light Mode | 🟡 Média | ⏳ Pendente |
+| 2.5 | Mock data para demonstração | 🟡 Média | ✅ Concluído |
+| 2.6 | Toggle Dark/Light Mode | 🟡 Média | ✅ Concluído |
 
 ---
 
@@ -49,13 +49,13 @@
 
 | # | Tarefa | Prioridade | Status |
 |---|--------|------------|--------|
-| 3.1 | Migration: accounts | 🔴 CRÍTICA | ⏳ Pendente |
-| 3.2 | Migration: cards | 🔴 CRÍTICA | ⏳ Pendente |
-| 3.3 | Model: Account, Card | 🔴 CRÍTICA | ⏳ Pendente |
-| 3.4 | CRUD Accounts API + UI | 🔴 CRÍTICA | ⏳ Pendente |
-| 3.5 | CRUD Cards API + UI | 🔴 CRÍTICA | ⏳ Pendente |
-| 3.6 | Dashboard Cards (estilo físico) | 🔴 CRÍTICA | ⏳ Pendente |
-| 3.7 | Fatura do cartão (por período) | 🟡 Média | ⏳ Pendente |
+| 3.1 | Migration: accounts | 🔴 CRÍTICA | ✅ Concluído |
+| 3.2 | Migration: cards | 🔴 CRÍTICA | ✅ Concluído |
+| 3.3 | Model: Account, Card | 🔴 CRÍTICA | ✅ Concluído |
+| 3.4 | CRUD Accounts API (Controllers/Routes) | 🔴 CRÍTICA | ✅ Concluído |
+| 3.5 | CRUD Cards API (Controllers/Routes) | 🔴 CRÍTICA | ✅ Concluído |
+| 3.6 | Dashboard Cards (UI Livewire) | 🔴 CRÍTICA | ⏳ Pendente |
+| 3.7 | Fatura do cartão (Lógica Backend) | 🟡 Média | ✅ Concluído |
 
 ---
 
@@ -65,13 +65,13 @@
 
 | # | Tarefa | Prioridade | Status |
 |---|--------|------------|--------|
-| 4.1 | Migration: transactions | 🔴 CRÍTICA | ⏳ Pendente |
-| 4.2 | Model: Transaction | 🔴 CRÍTICA | ⏳ Pendente |
-| 4.3 | Transactions API (CRUD) | 🔴 CRÍTICA | ⏳ Pendente |
-| 4.4 | Listagem com filtros (data/conta/cartão) | 🔴 CRÍTICA | ⏳ Pendente |
-| 4.5 | Formulário de transação | 🔴 CRÍTICA | ⏳ Pendente |
-| 4.6 | Carrossel Ano/Mês | 🟡 Média | ⏳ Pendente |
-| 4.7 | Modal de Quick Add (+) | 🔴 CRÍTICA | ⏳ Pendente |
+| 4.1 | Migration: transactions | 🔴 CRÍTICA | ✅ Concluído |
+| 4.2 | Model: Transaction | 🔴 CRÍTICA | ✅ Concluído |
+| 4.3 | Transactions API (CRUD Backend) | 🔴 CRÍTICA | ✅ Concluído |
+| 4.4 | Listagem com filtros (Lógica Backend) | 🔴 CRÍTICA | ✅ Concluído |
+| 4.5 | Formulário de transação (UI) | 🔴 CRÍTICA | ⏳ Pendente |
+| 4.6 | Carrossel Ano/Mês (UI) | 🟡 Média | ⏳ Pendente |
+| 4.7 | Modal de Quick Add (+) (UI) | 🔴 CRÍTICA | ⏳ Pendente |
 
 ---
 
@@ -145,6 +145,7 @@
 | 9.3 | Gerenciamento de categorias (UI) | 🟡 Média | ⏳ Pendente |
 | 9.4 | Feedback e problemas | 🟢 Baixa | ⏳ Pendente |
 | 9.5 | Export/Import dados | 🟢 Baixa | ⏳ Pendente |
+| 9.6 | UI Premium: Obsidian Glass Adaptation | 🔴 CRÍTICA | ✅ Concluído |
 
 ---
 
