@@ -34,8 +34,8 @@ Route::middleware('auth')->group(function () {
     Route::get('/dashboard/summary', [App\Http\Controllers\DashboardController::class, 'summary'])->name('dashboard.summary');
 
     // Contas
-    Route::resource('accounts', AccountController::class)
-        ->parameters(['accounts' => 'account']);
+    Route::get('/accounts', \App\Livewire\AccountManager::class)->name('accounts.index');
+    Route::get('/accounts/{account}', \App\Livewire\AccountShow::class)->name('accounts.show');
 
     // Cartões — fix crítico: create/edit não existem no controller
     Route::resource('cards', CardController::class)

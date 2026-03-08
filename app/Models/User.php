@@ -53,4 +53,9 @@ class User extends Authenticatable
     {
         return $this->hasMany(Profile::class);
     }
+
+    public function currentProfile()
+    {
+        return $this->profiles()->first();
+    }
 }

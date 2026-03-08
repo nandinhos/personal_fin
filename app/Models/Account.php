@@ -30,4 +30,11 @@ class Account extends Model
     {
         return $this->belongsTo(Profile::class);
     }
+
+    protected function formattedBalance(): \Illuminate\Database\Eloquent\Casts\Attribute
+    {
+        return \Illuminate\Database\Eloquent\Casts\Attribute::make(
+            get: fn () => 'R$ ' . number_format($this->balance, 2, ',', '.')
+        );
+    }
 }
