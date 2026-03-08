@@ -41,7 +41,7 @@ class CategoryController extends Controller
 
     public function update(Request $request, Category $category): JsonResponse
     {
-        abort_if($category->profile->user_id !== auth()->id(), 403);
+        $this->authorize('update', $category);
 
         $category->update($request->validate([
             'name' => 'required|string|max:255',
@@ -55,7 +55,7 @@ class CategoryController extends Controller
 
     public function destroy(Category $category): JsonResponse
     {
-        abort_if($category->profile->user_id !== auth()->id(), 403);
+        $this->authorize('delete', $category);
 
         $category->delete();
 

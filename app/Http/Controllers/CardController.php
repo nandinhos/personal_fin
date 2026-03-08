@@ -23,18 +23,6 @@ class CardController extends Controller
         return view('cards.index', compact('cards'));
     }
 
-    public function create()
-    {
-        return view('cards.create');
-    }
-
-    public function edit(Card $card)
-    {
-        abort_if($card->profile->user_id !== auth()->id(), 403);
-
-        return view('cards.edit', compact('card'));
-    }
-
     public function store(Request $request)
     {
         $profile = auth()->user()->profiles()->firstOrCreate(
@@ -66,14 +54,14 @@ class CardController extends Controller
 
     public function show(Card $card)
     {
-        abort_if($card->profile->user_id !== auth()->id(), 403);
+        $this->authorize('view', $card);
 
         return response()->json($card);
     }
 
     public function update(Request $request, Card $card)
     {
-        abort_if($card->profile->user_id !== auth()->id(), 403);
+        $this->authorize('update', $card);
 
         $validated = $request->validate([
             'name' => 'sometimes|string|max:255',
@@ -102,7 +90,7 @@ class CardController extends Controller
 
     public function destroy(Request $request, Card $card)
     {
-        abort_if($card->profile->user_id !== auth()->id(), 403);
+        $this->authorize('delete', $card);
 
         $card->delete();
 

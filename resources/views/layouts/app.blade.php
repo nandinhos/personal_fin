@@ -44,7 +44,7 @@
                         </a>
                         <!-- Botão Flutuante de Ação Rápida -->
                         <div class="relative -top-6">
-                            <button @click="window.location.href='{{ route('transactions.create') }}'" class="w-14 h-14 rounded-full bg-obsidian-primary flex items-center justify-center text-white shadow-[0_0_20px_var(--obsidian-primary-glow)] hover:scale-110 transition-transform">
+                            <button @click="window.location.href='{{ route('transactions.index') }}'" class="w-14 h-14 rounded-full bg-obsidian-primary flex items-center justify-center text-white shadow-[0_0_20px_var(--obsidian-primary-glow)] hover:scale-110 transition-transform">
                                 <svg class="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 4v16m8-8H4" />
                                 </svg>

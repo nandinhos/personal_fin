@@ -27,6 +27,13 @@
       ],
       "description": "Persistent memory for cross-session knowledge"
     },
+    "coreops": {
+      "command": "bun",
+      "args": [
+        "/home/nandodev/projects/coreops/src/mcp/server.ts"
+      ],
+      "description": "CoreOps — orquestrador cognitivo de desenvolvimento"
+    },
     "laravel-boost": {
       "command": "docker",
       "args": [

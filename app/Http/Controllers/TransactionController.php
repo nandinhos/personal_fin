@@ -55,20 +55,6 @@ class TransactionController extends Controller
         return view('transactions.index', compact('transactions', 'categories', 'accounts'));
     }
 
-    public function create()
-    {
-        $profile = auth()->user()->profiles()->firstOrCreate(
-            ['user_id' => auth()->id()],
-            ['name' => 'Principal', 'is_default' => true]
-        );
-
-        $categories = Category::where('profile_id', $profile->id)->get();
-        $accounts = Account::where('profile_id', $profile->id)->get();
-        $cards = Card::where('profile_id', $profile->id)->get();
-
-        return view('transactions.create', compact('categories', 'accounts', 'cards'));
-    }
-
     public function store(Request $request)
     {
         $profile = auth()->user()->profiles()->firstOrCreate(
@@ -142,14 +128,14 @@ class TransactionController extends Controller
 
     public function show(Transaction $transaction): JsonResponse
     {
-        abort_if($transaction->profile->user_id !== auth()->id(), 403);
+        $this->authorize('view', $transaction);
 
         return response()->json($transaction->load(['category', 'account', 'card']));
     }
 
     public function update(Request $request, Transaction $transaction): JsonResponse
     {
-        abort_if($transaction->profile->user_id !== auth()->id(), 403);
+        $this->authorize('update', $transaction);
 
         $validated = $request->validate([
             'category_id' => 'sometimes|exists:categories,id',
@@ -170,7 +156,7 @@ class TransactionController extends Controller
 
     public function destroy(Transaction $transaction): JsonResponse
     {
-        abort_if($transaction->profile->user_id !== auth()->id(), 403);
+        $this->authorize('delete', $transaction);
 
         $transaction->delete();
 

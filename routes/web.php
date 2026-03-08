@@ -37,12 +37,16 @@ Route::middleware('auth')->group(function () {
     Route::get('/accounts', \App\Livewire\AccountManager::class)->name('accounts.index');
     Route::get('/accounts/{account}', \App\Livewire\AccountShow::class)->name('accounts.show');
 
-    // Cartões — fix crítico: create/edit não existem no controller
+    // Cartões — unificado em Livewire
+    Route::get('/cards', \App\Livewire\CardManager::class)->name('cards.index');
     Route::resource('cards', CardController::class)
+        ->except(['index', 'create', 'edit'])
         ->parameters(['cards' => 'card']);
 
-    // Transações
+    // Transações — unificado em Livewire
+    Route::get('/transactions', \App\Livewire\TransactionManager::class)->name('transactions.index');
     Route::resource('transactions', TransactionController::class)
+        ->except(['index', 'create', 'edit'])
         ->parameters(['transactions' => 'transaction']);
 
     // Categorias e subcategorias

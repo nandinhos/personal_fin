@@ -34,7 +34,7 @@ class AccountController extends Controller
 
     public function edit(Account $account)
     {
-        abort_if($account->profile->user_id !== auth()->id(), 403);
+        $this->authorize('update', $account);
 
         return view('accounts.edit', compact('account'));
     }
@@ -67,14 +67,14 @@ class AccountController extends Controller
 
     public function show(Account $account): JsonResponse
     {
-        abort_if($account->profile->user_id !== auth()->id(), 403);
+        $this->authorize('view', $account);
 
         return response()->json($account);
     }
 
     public function update(Request $request, Account $account)
     {
-        abort_if($account->profile->user_id !== auth()->id(), 403);
+        $this->authorize('update', $account);
 
         $validated = $request->validate([
             'name'      => 'sometimes|string|max:255',
@@ -100,7 +100,7 @@ class AccountController extends Controller
 
     public function destroy(Request $request, Account $account)
     {
-        abort_if($account->profile->user_id !== auth()->id(), 403);
+        $this->authorize('delete', $account);
 
         $account->delete();
 
