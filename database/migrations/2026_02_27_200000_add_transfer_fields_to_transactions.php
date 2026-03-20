@@ -15,7 +15,7 @@ return new class extends Migration
             $table->string('transfer_type')->nullable()->after('type_temp');
         });
 
-        DB::statement('UPDATE transactions SET type_temp = type::text');
+        DB::statement('UPDATE transactions SET type_temp = type');
 
         Schema::table('transactions', function (Blueprint $table) {
             $table->dropColumn('type');
@@ -38,7 +38,7 @@ return new class extends Migration
             $table->string('type_temp')->nullable();
         });
 
-        DB::statement("UPDATE transactions SET type_temp = type::text WHERE type IN ('income', 'expense')");
+        DB::statement("UPDATE transactions SET type_temp = type WHERE type IN ('income', 'expense')");
 
         Schema::table('transactions', function (Blueprint $table) {
             $table->dropColumn('type');
